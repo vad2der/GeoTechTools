@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Wire sag model</title>
+  </head>
+  <body ng-app="utilities" ng-strict-di>
+    <div class=row>
+        <div class="button-group">
+            <button class="btn btn-default">
+                <a ui-sref="public.home">Home</a>
+            </button>
+            <button class="btn btn-default">
+                <a ui-sref="public.sag">Sag</a>
+            </button>
+            <button class="btn btn-default">
+                <a ui-sref="public.about">About</a>
+            </button>
+        </div>
+        <ui-view>
+            <div class="text-center initial-loading">
+                <h2>Loading Site...</h2>              
+            </div>
+        </ui-view>
+    </div>
+    <!-- Libraries -->
+    <script src="lib/jquery-2.1.4.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>    
+
+    <!-- Main Module -->
+    <script src="js/utilities.module.js"></script>
+
+    <!-- Public Module -->
+    <script src="js/public/public.module.js"></script>
+    <script src="js/public/routes.js"></script>
+    <script src="js/public/sag/sag.controller.js"></script>
+
+    <!-- Custom -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
