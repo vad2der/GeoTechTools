@@ -6,13 +6,65 @@
   <div class="text-center">
     Some text
   </div>
+
+  <div class=row id=elevation>
+	  	<div class="col-lg-1 col-lg-pull-1">
+		  	<input class="form-control" id=Ael placeholder="Elevation at Pole" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1"></div>
+		<div class="col-lg-2">
+		  	<input class="form-control" id=A0_25el placeholder="Elevation at 1/4" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1"></div>
+		<div class="col-lg-2">
+		  	<input class="form-control" id=Midel placeholder="Elevation at Midspan" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1"></div>
+		<div class="col-lg-2">
+		  	<input class="form-control" id=B0_25el placeholder="Elevation at 1/4" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1"></div>
+		<div class="col-lg-1 col-lg-push-1">
+		  	<input class="form-control" id=Bel placeholder="Elevation at Pole" type=number step='0.01' min='0.00'></input>
+		</div>
+	</div>
+
   <div id=canvas>
+  	  		
+  </div>
+
+  <div class=row id=ground>	
+	  	<div class="col-lg-1 col-lg-pull-1">
+		  	<input class="form-control" id=Agr placeholder="Ground at Pole" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1">
+			<input class="form-control" id=sp1 placeholder="Span 1" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-2">
+		  	<input class="form-control" id=A0_25gr placeholder="Ground at 1/4" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1">
+			<input class="form-control" id=sp1 placeholder="Span 2" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-2">
+		  	<input class="form-control" id=Midgr placeholder="Ground at Midspan" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1">
+			<input class="form-control" id=sp1 placeholder="Span 3" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-2">
+		  	<input class="form-control" id=B0_25gr placeholder="Ground at 1/4" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1">
+			<input class="form-control" id=sp1 placeholder="Span 4" type=number step='0.01' min='0.00'></input>
+		</div>
+		<div class="col-lg-1 col-lg-push-1">
+		  	<input class="form-control" id=Bgr placeholder="Ground at Pole" type=number step='0.01' min='0.00'></input>
+		</div>
+	
   </div>
   <!--sag-measuremnent ng-repeat="menuCategory in menuCtrl.menuCategories"
                  category="menuCategory">
   </sag-measuremnent-->
 
 </div>
-
-<script src="lib/d3.v3.min.js" charset="utf-8"></script>
-<script src="js/sag.js"></script>

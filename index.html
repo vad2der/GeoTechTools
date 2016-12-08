@@ -20,6 +20,10 @@
                 <a ui-sref="public.about">About</a>
             </button>
         </div>
+
+        <div id=message class=alert>
+        </div>
+
         <ui-view>
             <div class="text-center initial-loading">
                 <h2>Loading Site...</h2>              
@@ -31,7 +35,7 @@
     <script src="lib/bootstrap.min.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-ui-router.min.js"></script>    
-
+    <script src="lib/d3.v3.min.js" charset="utf-8"></script>
     <!-- Main Module -->
     <script src="js/utilities.module.js"></script>
 
@@ -41,6 +45,6 @@
     <script src="js/public/sag/sag.controller.js"></script>
 
     <!-- Custom -->
-    <script src="js/script.js"></script>
+    <script src="js/sag.js"></script>
   </body>
 </html>
