@@ -27,3 +27,15 @@
 	float: left;
 	margin: 0;
 }
+
+#elevation > div.col-lg-2 > span{
+	width: 100%;
+	float: left;
+	margin: 0;
+}
+
+#elevation > div.col-lg-push-1 > span{	
+	width: 235%;
+	float: left;
+	margin: 0;
+}
