@@ -37,7 +37,7 @@
   	<div id=canvas></div>
 
   	<form name=sagSpanForm novalidate>
-  	<div class=row>
+  	<div class=row id=span>
 	  	<div class="col-lg-1">
 	  		<span class=pull-left><--</span><span class=pull-right>--></span>
 	  	</div>
@@ -73,7 +73,7 @@
 	</form>
 
 	<form name=grndElevationForm novalidate>
-  	<div class=row id=ground name=sagGroundForm novalidate>	
+  	<div class=row id=ground>	
 	  	<div class="col-lg-1 col-lg-pull-1 form-group" ng-class="{ 'has-error': grndElevationForm.Agr.$error.required  && grndElevationForm.Agr.$touched}">
 		  	<input class="form-control" id=Agr name=Agr ng-model=sagCtrl.Agr placeholder="Ground at Pole" type=number step='0.01' min='0.00' required>
 		  	<span ng-show="grndElevationForm.Agr.$error.required && grndElevationForm.Agr.$touched" class="help-block">Required Value</span>
