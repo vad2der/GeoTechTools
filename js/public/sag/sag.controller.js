@@ -16,7 +16,7 @@ function SagController() {
 	  sagCtrl.BQuatEl = 6.5;
 	  sagCtrl.BEl = 8;
 
-	  sagCtrl.AGr=2.1;
+	  sagCtrl.AGr = 2.1;
 	  sagCtrl.AQuatGr = 2.2;
 	  sagCtrl.Midgr = 2.1;
 	  sagCtrl.BQuatGr = 2;
@@ -29,6 +29,27 @@ function SagController() {
 	  //test data --end
 	 }
 
+	 sagCtrl.clearData = function(){
+	 	d3.selectAll("svg").remove();
+	  //test data --start
+	  sagCtrl.AEl = null;
+	  sagCtrl.AQuatEl = null;
+	  sagCtrl.Midel = null;
+	  sagCtrl.BQuatEl = null;
+	  sagCtrl.BEl = null;
+
+	  sagCtrl.AGr = null;
+	  sagCtrl.AQuatGr = null;
+	  sagCtrl.Midgr = null;
+	  sagCtrl.BQuatGr = null;
+	  sagCtrl.BGr = null;
+
+	  sagCtrl.sp1 = null;
+	  sagCtrl.sp2 = null;
+	  sagCtrl.sp3 = null;
+	  sagCtrl.sp4 = null;
+	  //test data --end
+	 }
   var height = document.getElementById("canvas").clientHeight;
   var width = document.getElementById("canvas").clientWidth;
 
