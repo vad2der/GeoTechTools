@@ -74,14 +74,14 @@
 
 	<form name=grndElevationForm novalidate>
   	<div class=row id=ground>	
-	  	<div class="col-lg-1 col-lg-pull-1 form-group" ng-class="{ 'has-error': grndElevationForm.Agr.$error.required  && grndElevationForm.Agr.$touched}">
-		  	<input class="form-control" id=Agr name=Agr ng-model=sagCtrl.Agr placeholder="Ground at Pole" type=number step='0.01' min='0.00' required>
-		  	<span ng-show="grndElevationForm.Agr.$error.required && grndElevationForm.Agr.$touched" class="help-block">Required Value</span>
+	  	<div class="col-lg-1 col-lg-pull-1 form-group" ng-class="{ 'has-error': grndElevationForm.Agr.$error.required  && grndElevationForm.AGr.$touched}">
+		  	<input class="form-control" id=AGr name=AGr ng-model=sagCtrl.AGr placeholder="Ground at Pole" type=number step='0.01' min='0.00' required>
+		  	<span ng-show="grndElevationForm.AGr.$error.required && grndElevationForm.AGr.$touched" class="help-block">Required Value</span>
 		</div>
 		<div class="col-lg-1"></div>
-		<div class="col-lg-2 form-group" ng-class="{ 'has-error': grndElevationForm.AQuatgr.$error.required  && grndElevationForm.AQuatgr.$touched}">
-		  	<input class="form-control" id=AQuatgr name=AQuatgr ng-model=sagCtrl.AQuatgr placeholder="Ground at 1/4" type=number step='0.01' min='0.00' required>
-		  	<span ng-show="grndElevationForm.AQuatgr.$error.required && grndElevationForm.AQuatgr.$touched" class="help-block">Required Value</span>
+		<div class="col-lg-2 form-group" ng-class="{ 'has-error': grndElevationForm.AQuatGr.$error.required  && grndElevationForm.AQuatGr.$touched}">
+		  	<input class="form-control" id=AQuatGr name=AQuatGr ng-model=sagCtrl.AQuatGr placeholder="Ground at 1/4" type=number step='0.01' min='0.00' required>
+		  	<span ng-show="grndElevationForm.AQuatGr.$error.required && grndElevationForm.AQuatGr.$touched" class="help-block">Required Value</span>
 		</div>
 		<div class="col-lg-1"></div>
 		<div class="col-lg-2 form-group" ng-class="{ 'has-error': grndElevationForm.Midgr.$error.required  && grndElevationForm.Midgr.$touched}">
@@ -89,16 +89,16 @@
 		  	<span ng-show="grndElevationForm.Midgr.$error.required && grndElevationForm.Midgr.$touched" class="help-block">Required Value</span>
 		</div>
 		<div class="col-lg-1"></div>
-		<div class="col-lg-2 form-group" ng-class="{ 'has-error': grndElevationForm.BQuatgr.$error.required  && grndElevationForm.BQuatgr.$touched}">
-		  	<input class="form-control" id=BQuatgr name=BQuatgr ng-model=sagCtrl.BQuatgr placeholder="Ground at 1/4" type=number step='0.01' min='0.00' required>
-		  	<span ng-show="grndElevationForm.BQuatgr.$error.required && grndElevationForm.BQuatgr.$touched" class="help-block">Required Value</span>
+		<div class="col-lg-2 form-group" ng-class="{ 'has-error': grndElevationForm.BQuatGr.$error.required  && grndElevationForm.BQuatGr.$touched}">
+		  	<input class="form-control" id=BQuatGr name=BQuatGr ng-model=sagCtrl.BQuatGr placeholder="Ground at 1/4" type=number step='0.01' min='0.00' required>
+		  	<span ng-show="grndElevationForm.BQuatGr.$error.required && grndElevationForm.BQuatGr.$touched" class="help-block">Required Value</span>
 		</div>
 		<div class="col-lg-1"></div>
-		<div class="col-lg-1 col-lg-push-1 form-group" ng-class="{ 'has-error': grndElevationForm.Bgr.$error.required  && grndElevationForm.Bgr.$touched}">
-		  	<input class="form-control" id=Bgr name=Bgr ng-model=sagCtrl.Bgr placeholder="Ground at Pole" type=number step='0.01' min='0.00' required>
-		  	<span ng-show="grndElevationForm.Bgr.$error.required && grndElevationForm.Bgr.$touched" class="help-block">Required Value</span>
+		<div class="col-lg-1 col-lg-push-1 form-group" ng-class="{ 'has-error': grndElevationForm.Bgr.$error.required  && grndElevationForm.BGr.$touched}">
+		  	<input class="form-control" id=BGr name=BGr ng-model=sagCtrl.BGr placeholder="Ground at Pole" type=number step='0.01' min='0.00' required>
+		  	<span ng-show="grndElevationForm.BGr.$error.required && grndElevationForm.BGr.$touched" class="help-block">Required Value</span>
 		</div>
-  	</div>
+  	</div><div ng-if="grndElevationForm.$valid && sagSpanForm.$valid && sagElevationForm.$valid" ng-init=sagCtrl.drawDiagram()></div>
   <!--sag-measuremnent ng-repeat="menuCategory in menuCtrl.menuCategories"
                  category="menuCategory">
   </sag-measuremnent-->
