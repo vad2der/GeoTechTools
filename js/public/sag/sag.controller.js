@@ -8,24 +8,26 @@ angular.module('public')
 function SagController() {
   var sagCtrl = this;
   
-  //test data --start
-  sagCtrl.AEl = 8;
-  sagCtrl.AQuatEl = 6.5;
-  sagCtrl.Midel = 6;
-  sagCtrl.BQuatEl = 6.5;
-  sagCtrl.BEl = 8;
+  sagCtrl.loadTestData = function(){
+	  //test data --start
+	  sagCtrl.AEl = 8;
+	  sagCtrl.AQuatEl = 6.5;
+	  sagCtrl.Midel = 6;
+	  sagCtrl.BQuatEl = 6.5;
+	  sagCtrl.BEl = 8;
 
-  sagCtrl.AGr=2.1;
-  sagCtrl.AQuatGr = 2.2;
-  sagCtrl.Midgr = 2.1;
-  sagCtrl.BQuatGr = 2;
-  sagCtrl.BGr = 1.9;
+	  sagCtrl.AGr=2.1;
+	  sagCtrl.AQuatGr = 2.2;
+	  sagCtrl.Midgr = 2.1;
+	  sagCtrl.BQuatGr = 2;
+	  sagCtrl.BGr = 1.9;
 
-  sagCtrl.sp1 = 2;
-  sagCtrl.sp2 = 2;
-  sagCtrl.sp3 = 2;
-  sagCtrl.sp4 = 2;
-  //test data --end
+	  sagCtrl.sp1 = 2;
+	  sagCtrl.sp2 = 2;
+	  sagCtrl.sp3 = 2;
+	  sagCtrl.sp4 = 2;
+	  //test data --end
+	 }
 
   var height = document.getElementById("canvas").clientHeight;
   var width = document.getElementById("canvas").clientWidth;
