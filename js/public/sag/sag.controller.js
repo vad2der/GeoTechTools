@@ -57,7 +57,7 @@ function SagController($scope) {
   
   var width = 1200;//document.getElementById("canvas").clientWidth;
   var height = 400;//document.getElementById("canvas").clientHeight;
-   console.log(width, height);
+   //console.log(width, height);
 
   sagCtrl.drawDiagram = function(){
   	d3.selectAll("svg").remove();
@@ -137,52 +137,93 @@ function SagController($scope) {
     const poleA = [{"x": 0, "y": sagCtrl.AGr}, {"x": 0, "y": sagCtrl.AEl}];
     const poleB = [{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3+sagCtrl.sp4, "y": sagCtrl.BGr}, {"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3+sagCtrl.sp4, "y": sagCtrl.BEl}];
 
-	var PoleAGraph = svgAuxillary.append("path")
+	var PoleAGraph = svgAuxillary.append("g")
+							.attr('class', 'poleA')
+               				.append('path')
                             .attr("d", polesFunction(poleA))
                             .attr("stroke", "black")
                             .attr("stroke-width", 5)
                             .attr("fill", "none")                            
     						.attr('class','pole');
 
-	var PoleBGraph = svgAuxillary.append("path")
+	var PoleBGraph = svgAuxillary.append("g")
+							.attr('class', 'poleB')
+							.append("path")
                             .attr("d", polesFunction(poleB))
                             .attr("stroke", "black")
                             .attr("stroke-width", 5)
                             .attr("fill", "none")
     						.attr('class','pole');
+
+		var poleAcx = 0;
+    	var poleAcy = height-2*margin-((poleA[1].y-poleA[0].y)/2-Math.min.apply(null, ground))*yScaleFactor
+    	var poleAdy = poleA[1].y-poleA[0].y;
+
+		d3.selectAll("g.poleA").append("text")
+		.attr("x", poleAcx)
+		.attr("y", poleAcy)
+		.attr("text-anchor", "middle")
+		.attr("alignment-baseline", "before-edge")
+		.text(poleAdy)
+		.attr("font-family", "Arial Black")
+       	.attr("font-size", "1em")
+       	.attr("fill", "grey")
+        .attr("transform", "rotate(-90 "+poleAcx+", "+poleAcy+")");
+
+        var poleBcx = (sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3+sagCtrl.sp4)*xScaleFactor;
+    	var poleBcy = height-2*margin-((poleB[1].y-poleB[0].y)/2-Math.min.apply(null, ground))*yScaleFactor
+    	var poleBdy = poleB[1].y-poleB[0].y;
+
+		d3.selectAll("g.poleB").append("text")
+		.attr("x", poleBcx)
+		.attr("y", poleBcy)
+		.attr("text-anchor", "middle")
+		.attr("alignment-baseline", "after-edge")
+		.text(poleBdy)
+		.attr("font-family", "Arial Black")
+       	.attr("font-size", "1em")
+       	.attr("fill", "grey")
+        .attr("transform", "rotate(-90 "+poleBcx+", "+poleBcy+")");
+
 //poles geomentry -ends	
 //mid and 1/4 lines -starts
-	const AQuat = [{"x": sagCtrl.sp1, "y": sagCtrl.AQuatGr},{"x": sagCtrl.sp1, "y": sagCtrl.AQuatEl}];
-	const Mid = [{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midgr},{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midel}];
-	const BQuat = [{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatGr},{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatEl}];
+	const inner = [[{"x": sagCtrl.sp1, "y": sagCtrl.AQuatGr},{"x": sagCtrl.sp1, "y": sagCtrl.AQuatEl}],
+				  [{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midgr},{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midel}],
+				  [{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatGr},{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatEl}]];
+	
 	var innnerLinesFunction = d3.svg.line()
     			.x(d => d.x*xScaleFactor)
     			.y(d => height-2*margin-(d.y-Math.min.apply(null, ground))*yScaleFactor)
     			.interpolate("linear");
-
-	var QuatAGraph = svgAuxillary.append("path")
-                            .attr("d", polesFunction(AQuat))
+	
+	inner.forEach(function(unit, i){
+		var i =svgAuxillary.append("g")
+							.attr('class', 'aux-line')
+               				.append('path')
+                            .attr("d", polesFunction(unit))
                             .attr("stroke", "black")
                             .attr("stroke-dasharray", ("10,3"))
                             .attr("stroke-width", 1)
                             .attr("fill", "none")
     						.attr('class','inner-aux-line');
+    	
+    	var cx = unit[0].x*xScaleFactor;
+    	var cy = height-2*margin-((unit[0].y+unit[1].y)/2-Math.min.apply(null, ground))*yScaleFactor
+    	var dy = unit[1].y-unit[0].y;
 
-	var MidGraph = svgAuxillary.append("path")
-                            .attr("d", polesFunction(Mid))
-                            .attr("stroke", "black")
-                            .attr("stroke-dasharray", ("10,3"))
-                            .attr("stroke-width", 1)
-                            .attr("fill", "none")
-    						.attr('class','inner-aux-line');
-
-	var QuatBGraph = svgAuxillary.append("path")
-                            .attr("d", polesFunction(BQuat))
-                            .attr("stroke", "black")
-                            .attr("stroke-dasharray", ("10,3"))
-                            .attr("stroke-width", 1)
-                            .attr("fill", "none")
-    						.attr('class','inner-aux-line');
+		d3.selectAll("g.aux-line").append("text")
+		.attr("x", cx)
+		.attr("y", cy)
+		.attr("text-anchor", "middle")
+		.attr("alignment-baseline", "after-edge")
+		.text(dy)
+		.attr("font-family", "Arial Black")
+       	.attr("font-size", "1em")
+       	.attr("fill", "grey")
+        .attr("transform", "rotate(-90 "+cx+", "+cy+")");
+	});	
+	
+	
 // mid and 1/4 lines -ends
   }
 
