@@ -3,14 +3,13 @@
 
 <div class="container" id="main-content">
   <h2 id="menu-categories-title" class="text-center">Wire Sag Modelling</h2>
-  <div class="text-center">
-    Some text <button class="btn btn-default" ng-click=sagCtrl.loadTestData();>Load Test Data</button><button class="btn btn-default" ng-click=sagCtrl.clearData();>Clear Data</button>
+  <div class="text-center">Some text <button class="btn btn-default" ng-click=sagCtrl.loadTestData();>Load Test Data</button><button class="btn btn-default" ng-click=sagCtrl.clearData();>Clear Data</button>
   </div>
   	<form name=sagElevationForm ng-keyup=sagCtrl.drawDiagram(); novalidate>
   	<div class=row id=elevation>
 	  	<div class="col-lg-1 col-lg-pull-1 form-group" ng-class="{ 'has-error': sagElevationForm.AEl.$error.required  && sagElevationForm.AEl.$touched}">
 	  		<span ng-show="sagElevationForm.AEl.$error.required && sagElevationForm.AEl.$touched" class="help-block">Required Value</span>
-		  	<input class=form-control id=Ael ng-model=sagCtrl.AEl name=AEl placeholder="Elevation at Pole" type=number step=0.01 min=0.00 required>		  	
+		  	<input class=form-control id=Ael ng-model=sagCtrl.AEl name=AEl placeholder="Elevation at Pole" type=number step=0.01 min=0.00 required>	  	
 		</div>
 		<div class="col-lg-1"></div>
 		<div class="col-lg-2 form-group" ng-class="{ 'has-error': sagElevationForm.AQuatEl.$error.required  && sagElevationForm.AQuatEl.$touched}">
@@ -36,7 +35,7 @@
 	</form>
   	<div id=canvas></div>
 
-  	<form name=sagSpanForm novalidate>
+  	<form name=sagSpanForm ng-keyup=sagCtrl.drawDiagram(); novalidate>
   	<div class=row id=span>
 	  	<div class="col-lg-1">
 	  		<span class=pull-left><--</span><span class=pull-right>--></span>
@@ -72,7 +71,7 @@
   	</div>
 	</form>
 
-	<form name=grndElevationForm novalidate>
+	<form name=grndElevationForm ng-keyup=sagCtrl.drawDiagram(); novalidate>
   	<div class=row id=ground>	
 	  	<div class="col-lg-1 col-lg-pull-1 form-group" ng-class="{ 'has-error': grndElevationForm.Agr.$error.required  && grndElevationForm.AGr.$touched}">
 		  	<input class="form-control" id=AGr name=AGr ng-model=sagCtrl.AGr placeholder="Ground at Pole" type=number step='0.01' min='0.00' required>

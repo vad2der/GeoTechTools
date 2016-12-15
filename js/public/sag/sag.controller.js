@@ -54,9 +54,11 @@ function SagController($scope) {
 	  $scope.grndElevationForm.$setUntouched();
 	 }
 
-  var height = document.getElementById("canvas").clientHeight;
-  var width = document.getElementById("canvas").clientWidth;
- 
+  
+  var width = 1200;//document.getElementById("canvas").clientWidth;
+  var height = 400;//document.getElementById("canvas").clientHeight;
+   console.log(width, height);
+
   sagCtrl.drawDiagram = function(){
   	d3.selectAll("svg").remove();
   	const margin = 0.01*height;
@@ -108,18 +110,83 @@ function SagController($scope) {
                             .attr("d", lineFunction(wirePoints))
                             .attr("stroke", "blue")
                             .attr("stroke-width", 2)
-                            .attr("fill", "none");
-                            //.attr("transform", function (d) {return "translate("+d.x+","+d.y+")"; });
+                            .attr("fill", "none")
+    						.attr('class','wire');
 
 	var groundLineGraph = svgContainer.append("path")
                             .attr("d", lineFunction(groundPoints))
                             .attr("stroke", "green")
                             .attr("stroke-width", 2)
-                            .attr("fill", "none");
-                            //.attr("transform", function (d) {return "translate("+d.x+","+d.y+")"; });
+                            .attr("fill", "none")
+    						.attr('class','ground');
+
+// additional geometry --starts
+	
+	var svgAuxillary = d3.selectAll("svg")
+    	.attr("width", width)
+    	.attr("height", height)
+  			.append("g")
+    		.attr("transform", "translate("+margin+","+margin+")");
+
+// poles geomentry -starts
+	var polesFunction = d3.svg.line()
+    			.x(d => d.x*xScaleFactor)
+    			.y(d => height-2*margin-(d.y-Math.min.apply(null, ground))*yScaleFactor)
+    			.interpolate("linear");
+
+    const poleA = [{"x": 0, "y": sagCtrl.AGr}, {"x": 0, "y": sagCtrl.AEl}];
+    const poleB = [{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3+sagCtrl.sp4, "y": sagCtrl.BGr}, {"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3+sagCtrl.sp4, "y": sagCtrl.BEl}];
+
+	var PoleAGraph = svgAuxillary.append("path")
+                            .attr("d", polesFunction(poleA))
+                            .attr("stroke", "black")
+                            .attr("stroke-width", 5)
+                            .attr("fill", "none")                            
+    						.attr('class','pole');
+
+	var PoleBGraph = svgAuxillary.append("path")
+                            .attr("d", polesFunction(poleB))
+                            .attr("stroke", "black")
+                            .attr("stroke-width", 5)
+                            .attr("fill", "none")
+    						.attr('class','pole');
+//poles geomentry -ends	
+//mid and 1/4 lines -starts
+	const AQuat = [{"x": sagCtrl.sp1, "y": sagCtrl.AQuatGr},{"x": sagCtrl.sp1, "y": sagCtrl.AQuatEl}];
+	const Mid = [{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midgr},{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midel}];
+	const BQuat = [{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatGr},{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatEl}];
+	var innnerLinesFunction = d3.svg.line()
+    			.x(d => d.x*xScaleFactor)
+    			.y(d => height-2*margin-(d.y-Math.min.apply(null, ground))*yScaleFactor)
+    			.interpolate("linear");
+
+	var QuatAGraph = svgAuxillary.append("path")
+                            .attr("d", polesFunction(AQuat))
+                            .attr("stroke", "black")
+                            .attr("stroke-dasharray", ("10,3"))
+                            .attr("stroke-width", 1)
+                            .attr("fill", "none")
+    						.attr('class','inner-aux-line');
+
+	var MidGraph = svgAuxillary.append("path")
+                            .attr("d", polesFunction(Mid))
+                            .attr("stroke", "black")
+                            .attr("stroke-dasharray", ("10,3"))
+                            .attr("stroke-width", 1)
+                            .attr("fill", "none")
+    						.attr('class','inner-aux-line');
+
+	var QuatBGraph = svgAuxillary.append("path")
+                            .attr("d", polesFunction(BQuat))
+                            .attr("stroke", "black")
+                            .attr("stroke-dasharray", ("10,3"))
+                            .attr("stroke-width", 1)
+                            .attr("fill", "none")
+    						.attr('class','inner-aux-line');
+// mid and 1/4 lines -ends
   }
 
 }
 	
 
-})();
+})(window);
