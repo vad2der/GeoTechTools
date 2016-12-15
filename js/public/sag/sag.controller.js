@@ -4,10 +4,10 @@
 angular.module('public')
 .controller('SagController', SagController);
 
-//MenuController.$inject = ['menuCategories'];
-function SagController() {
+SagController.$inject = ['$scope'];
+function SagController($scope) {
   var sagCtrl = this;
-  
+
   sagCtrl.loadTestData = function(){
 	  //test data --start
 	  sagCtrl.AEl = 8;
@@ -49,13 +49,16 @@ function SagController() {
 	  sagCtrl.sp3 = null;
 	  sagCtrl.sp4 = null;
 	  //test data --end
+	  $scope.sagElevationForm.$setUntouched();
+	  $scope.sagSpanForm.$setUntouched();
+	  $scope.grndElevationForm.$setUntouched();
 	 }
+
   var height = document.getElementById("canvas").clientHeight;
   var width = document.getElementById("canvas").clientWidth;
-
-  d3.selectAll("svg").remove();
  
   sagCtrl.drawDiagram = function(){
+  	d3.selectAll("svg").remove();
   	const margin = 0.01*height;
   	var wire = [sagCtrl.AEl, sagCtrl.AQuatEl, sagCtrl.Midel, sagCtrl.BQuatEl, sagCtrl.BEl];
   	var ground = [sagCtrl.AGr, sagCtrl.AQuatGr, sagCtrl.Midgr, sagCtrl.BQuatGr, sagCtrl.BGr];

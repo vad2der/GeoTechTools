@@ -6,7 +6,7 @@
   <div class="text-center">
     Some text <button class="btn btn-default" ng-click=sagCtrl.loadTestData();>Load Test Data</button><button class="btn btn-default" ng-click=sagCtrl.clearData();>Clear Data</button>
   </div>
-  	<form name=sagElevationForm novalidate>
+  	<form name=sagElevationForm ng-keyup=sagCtrl.drawDiagram(); novalidate>
   	<div class=row id=elevation>
 	  	<div class="col-lg-1 col-lg-pull-1 form-group" ng-class="{ 'has-error': sagElevationForm.AEl.$error.required  && sagElevationForm.AEl.$touched}">
 	  		<span ng-show="sagElevationForm.AEl.$error.required && sagElevationForm.AEl.$touched" class="help-block">Required Value</span>
