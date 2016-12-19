@@ -102,8 +102,11 @@ function SagController($scope) {
 	var svgContainer = d3.select("#canvas").append("svg")
     	.attr("width", width)
     	.attr("height", height)
+    	.attr('class','svg-cont')
+    	.on("mousemove", handleMouseMove)
   			.append("g")
-    		.attr("transform", "translate("+margin+","+margin+")");
+    		.attr("transform", "translate("+margin+","+margin+")")
+    		.attr('class','g-cont');
 
 
     var wireLineGraph = svgContainer.append("path")
@@ -155,11 +158,11 @@ function SagController($scope) {
                             .attr("fill", "none")
     						.attr('class','pole');
 
-		var poleAcx = 0;
-    	var poleAcy = height-2*margin-((poleA[1].y-poleA[0].y)/2-Math.min.apply(null, ground))*yScaleFactor
-    	var poleAdy = poleA[1].y-poleA[0].y;
+	var poleAcx = 0;
+    var poleAcy = height-2*margin-((poleA[1].y-poleA[0].y)/2)*yScaleFactor;
+    var poleAdy = poleA[1].y-poleA[0].y;
 
-		d3.selectAll("g.poleA").append("text")
+	d3.selectAll("g.poleA").append("text")
 		.attr("x", poleAcx)
 		.attr("y", poleAcy)
 		.attr("text-anchor", "middle")
@@ -170,11 +173,11 @@ function SagController($scope) {
        	.attr("fill", "grey")
         .attr("transform", "rotate(-90 "+poleAcx+", "+poleAcy+")");
 
-        var poleBcx = (sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3+sagCtrl.sp4)*xScaleFactor;
-    	var poleBcy = height-2*margin-((poleB[1].y-poleB[0].y)/2-Math.min.apply(null, ground))*yScaleFactor
-    	var poleBdy = poleB[1].y-poleB[0].y;
+    var poleBcx = (sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3+sagCtrl.sp4)*xScaleFactor;
+    var poleBcy = height-2*margin-((poleB[1].y-poleB[0].y)/2)*yScaleFactor;
+    var poleBdy = poleB[1].y-poleB[0].y;
 
-		d3.selectAll("g.poleB").append("text")
+	d3.selectAll("g.poleB").append("text")
 		.attr("x", poleBcx)
 		.attr("y", poleBcy)
 		.attr("text-anchor", "middle")
@@ -221,10 +224,23 @@ function SagController($scope) {
        	.attr("font-size", "1em")
        	.attr("fill", "grey")
         .attr("transform", "rotate(-90 "+cx+", "+cy+")");
-	});	
-	
-	
+	});		
 // mid and 1/4 lines -ends
+
+  function handleMouseMove(d, i){
+        	var coordinates = [0, 0];
+        	coordinates = d3.mouse(this);
+			var x = coordinates[0];
+			var y = coordinates[1];
+
+			d3.selectAll('text.curr-label').remove();
+			
+			svgContainer
+			.append("text")
+			.attr("x", x)
+			.attr("y", y)
+			.attr('class','curr-label')
+			.text(parseFloat(x/xScaleFactor).toFixed(2)+", "+parseFloat(y/yScaleFactor).toFixed(2));        }
   }
 
 }
