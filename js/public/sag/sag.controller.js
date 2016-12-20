@@ -212,7 +212,7 @@ function SagController($scope) {
     	
     	var cx = unit[0].x*xScaleFactor;
     	var cy = height-2*margin-((unit[0].y+unit[1].y)/2-Math.min.apply(null, ground))*yScaleFactor
-    	var dy = unit[1].y-unit[0].y;
+    	var dy = parseFloat(unit[1].y-unit[0].y).toFixed(2);
 
 		d3.selectAll("g.aux-line").append("text")
 		.attr("x", cx)
@@ -227,6 +227,7 @@ function SagController($scope) {
 	});		
 // mid and 1/4 lines -ends
 
+	var line;
   function handleMouseMove(d, i){
         	var coordinates = [0, 0];
         	coordinates = d3.mouse(this);
@@ -234,13 +235,69 @@ function SagController($scope) {
 			var y = coordinates[1];
 
 			d3.selectAll('text.curr-label').remove();
-			
-			svgContainer
+			d3.selectAll('g.custom-verticals').remove();
+			d3.selectAll('circle.circle-vertical-ground').remove();
+			d3.selectAll('circle.circle-vertical-wire').remove();
+
+			line = [{"x": x/xScaleFactor,
+					 "y": 0},
+					{"x": x/xScaleFactor,
+					 "y": height}];
+			var custLineContainer = svgContainer
+				.append("g")
+				.attr('class', 'custom-verticals');
+
+			custLineContainer
+				.append("path")
+                .attr("d", polesFunction(line))
+                .attr("stroke", "red")
+                .attr("stroke-width", 1)
+                .attr("fill", "none")
+    			.attr('class','custom-vertical');
+
+			// intersection using Kevin Lindsey's library
+			var pathEl = d3.select('path.wire').node();
+			var intersectionEl;
+			var pathGr = d3.select('path.ground').node();
+			var intersectionGr;
+			var custLine = d3.select('path.custom-vertical').node();
+
+			var shape1 = new Path(pathEl);
+			var linePath = new Path(custLine);
+			var overlays1 = Intersection.intersectShapes(shape1, linePath);
+
+			var shape2 = new Path(pathGr);			
+			var overlays2 = Intersection.intersectShapes(shape2, linePath);			
+
+			custLineContainer
+			.selectAll('circle.circle-vertical-wire')
+				.data(overlays1.points).enter()
+			.append('circle')
+			.attr('cx', d => d.x)
+			.attr('cy', d => d.y)
+			.attr('r',5)
+			.attr("fill", "red")
+			.attr('class','circle-vertical-wire');
+
+			custLineContainer
+			.selectAll('circle.circle-vertical-ground')
+				.data(overlays2.points).enter()
+			.append('circle')
+			.attr('cx', d => d.x)
+			.attr('cy', d => d.y)
+			.attr('r',5)
+			.attr("fill", "red")
+			.attr('class','circle-vertical-ground');
+
+			custLineContainer
 			.append("text")
 			.attr("x", x)
 			.attr("y", y)
 			.attr('class','curr-label')
-			.text(parseFloat(x/xScaleFactor).toFixed(2)+", "+parseFloat(y/yScaleFactor).toFixed(2));        }
+			.text(parseFloat((overlays2.points[0].y - overlays1.points[0].y)/yScaleFactor).toFixed(2));
+
+			
+		}
   }
 
 }
