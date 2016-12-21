@@ -227,13 +227,20 @@ function SagController($scope) {
         .attr("transform", "rotate(-90 "+cx+", "+cy+")");
 	});		
 // mid and 1/4 lines -ends
-
+	
+	// measurement lines -start
+	var coordinates = [0, 0];
+	var x, y;
+	var custLineContainer;
 	var line;
-  function handleMouseMove(d, i){
-        	var coordinates = [0, 0];
+	var textX, textY;
+	var measurement1, measurement2;
+	var leftMeasurement, rightMeasurement;
+
+  function handleMouseMove(d, i){        	
         	coordinates = d3.mouse(this);
-			var x = coordinates[0];
-			var y = coordinates[1];
+			x = coordinates[0];
+			y = coordinates[1];
 
 			d3.selectAll('text.curr-label').remove();
 			d3.selectAll('g.custom-verticals').remove();
@@ -244,7 +251,7 @@ function SagController($scope) {
 					 "y": 0},
 					{"x": x/xScaleFactor,
 					 "y": height}];
-			var custLineContainer = svgContainer
+			custLineContainer = svgContainer
 				.append("g")
 				.attr('class', 'custom-verticals');
 
@@ -292,12 +299,58 @@ function SagController($scope) {
 				.attr("fill", "red")
 				.attr('class','circle-vertical-ground');
 
+				textX = (overlays2.points[0].x + overlays1.points[0].x)/2;
+				textY = (overlays2.points[0].y + overlays1.points[0].y)/2;
+
 				custLineContainer
 				.append("text")
-				.attr("x", x)
-				.attr("y", y)
+				.attr("x", textX)
+				.attr("y", textY)
 				.attr('class','curr-label')
-				.text(parseFloat((overlays2.points[0].y - overlays1.points[0].y)/yScaleFactor).toFixed(2));
+				.text(parseFloat((overlays2.points[0].y - overlays1.points[0].y)/yScaleFactor).toFixed(2))
+				.attr("text-anchor", "middle")
+				.attr("alignment-baseline", "after-edge")
+				.attr("transform", "rotate(-90 "+textX+", "+textY+")");
+
+				measurement1 = [{"x": 0, "y": (height*.4)/yScaleFactor},
+									{"x": x/xScaleFactor, "y": (height*.4)/yScaleFactor}];
+
+				measurement2 = [{"x": width/xScaleFactor, "y": (height*.4)/yScaleFactor},
+									{"x": x/xScaleFactor, "y": (height*.4)/yScaleFactor}];
+
+				leftMeasurement = custLineContainer
+				.append("path")
+                .attr("d", polesFunction(measurement1))
+                .attr("stroke", "red")
+                .attr("stroke-width", 1)
+                .attr("fill", "none")
+    			.attr('class','left-measurement');
+
+    			custLineContainer
+				.append("text")
+				.attr("x", function(){return leftMeasurement[0][0].getTotalLength()/2;})
+				.attr("y", height*.88)
+				.attr('class','curr-label')
+				.text(function(){return parseFloat(leftMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);})
+				.attr("text-anchor", "middle")
+				.attr("alignment-baseline", "after-edge");
+
+    			rightMeasurement = custLineContainer
+				.append("path")
+                .attr("d", polesFunction(measurement2))
+                .attr("stroke", "red")
+                .attr("stroke-width", 1)
+                .attr("fill", "none")
+    			.attr('class','right-measurement');
+
+    			custLineContainer
+				.append("text")
+				.attr("x", function(){return leftMeasurement[0][0].getTotalLength()+rightMeasurement[0][0].getTotalLength()/2;})
+				.attr("y", height*.88)
+				.attr('class','curr-label')
+				.text(function(){return parseFloat(rightMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);})
+				.attr("text-anchor", "middle")
+				.attr("alignment-baseline", "after-edge");
 			}			
 		}
 
