@@ -103,7 +103,8 @@ function SagController($scope) {
     	.attr("width", width)
     	.attr("height", height)
     	.attr('class','svg-cont')
-    	.on("mousemove", handleMouseMove)
+    	.on("mousemove", handleMouseMove)    	
+    	.on("click", handleClick)
   			.append("g")
     		.attr("transform", "translate("+margin+","+margin+")")
     		.attr('class','g-cont');
@@ -255,48 +256,59 @@ function SagController($scope) {
                 .attr("fill", "none")
     			.attr('class','custom-vertical');
 
-			// intersection using Kevin Lindsey's library
-			var pathEl = d3.select('path.wire').node();
-			var intersectionEl;
-			var pathGr = d3.select('path.ground').node();
-			var intersectionGr;
-			var custLine = d3.select('path.custom-vertical').node();
+    		if (x > margin && x < width - margin*2){
+    			
+				// intersection using Kevin Lindsey's library
+				var pathEl = d3.select('path.wire').node();
+				var intersectionEl;
+				var pathGr = d3.select('path.ground').node();
+				var intersectionGr;
+				var custLine = d3.select('path.custom-vertical').node();
 
-			var shape1 = new Path(pathEl);
-			var linePath = new Path(custLine);
-			var overlays1 = Intersection.intersectShapes(shape1, linePath);
+				var shape1 = new Path(pathEl);
+				var linePath = new Path(custLine);
+				var overlays1 = Intersection.intersectShapes(shape1, linePath);
 
-			var shape2 = new Path(pathGr);			
-			var overlays2 = Intersection.intersectShapes(shape2, linePath);			
+				var shape2 = new Path(pathGr);			
+				var overlays2 = Intersection.intersectShapes(shape2, linePath);			
 
-			custLineContainer
-			.selectAll('circle.circle-vertical-wire')
-				.data(overlays1.points).enter()
-			.append('circle')
-			.attr('cx', d => d.x)
-			.attr('cy', d => d.y)
-			.attr('r',5)
-			.attr("fill", "red")
-			.attr('class','circle-vertical-wire');
+				custLineContainer
+				.selectAll('circle.circle-vertical-wire')
+					.data(overlays1.points).enter()
+				.append('circle')
+				.attr('cx', d => d.x)
+				.attr('cy', d => d.y)
+				.attr('r',5)
+				.attr("fill", "red")
+				.attr('class','circle-vertical-wire');
 
-			custLineContainer
-			.selectAll('circle.circle-vertical-ground')
-				.data(overlays2.points).enter()
-			.append('circle')
-			.attr('cx', d => d.x)
-			.attr('cy', d => d.y)
-			.attr('r',5)
-			.attr("fill", "red")
-			.attr('class','circle-vertical-ground');
+				custLineContainer
+				.selectAll('circle.circle-vertical-ground')
+					.data(overlays2.points).enter()
+				.append('circle')
+				.attr('cx', d => d.x)
+				.attr('cy', d => d.y)
+				.attr('r',5)
+				.attr("fill", "red")
+				.attr('class','circle-vertical-ground');
 
-			custLineContainer
-			.append("text")
-			.attr("x", x)
-			.attr("y", y)
-			.attr('class','curr-label')
-			.text(parseFloat((overlays2.points[0].y - overlays1.points[0].y)/yScaleFactor).toFixed(2));
+				custLineContainer
+				.append("text")
+				.attr("x", x)
+				.attr("y", y)
+				.attr('class','curr-label')
+				.text(parseFloat((overlays2.points[0].y - overlays1.points[0].y)/yScaleFactor).toFixed(2));
+			}			
+		}
 
-			
+		function handleClick(){
+			var wireCoord = d3.select('circle.circle-vertical-wire');
+			var groundCoord = d3.selectAll('circle.circle-vertical-ground');
+			//#canvas > svg > g.g-cont > g > circle.circle-vertical-wire
+			console.log("Elevation Coord:", wireCoord.attr('cx')/xScaleFactor, wireCoord.attr('cy')/yScaleFactor);
+			console.log("Ground Coord:", groundCoord.attr('cx')/xScaleFactor, groundCoord.attr('cy')/yScaleFactor);
+			console.log("Height:", (groundCoord.attr('cy') - wireCoord.attr('cy'))/yScaleFactor);
+			console.log('--------------------------------------------------------------------');
 		}
   }
 
