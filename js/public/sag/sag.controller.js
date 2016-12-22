@@ -7,6 +7,8 @@ angular.module('public')
 SagController.$inject = ['$scope'];
 function SagController($scope) {
   var sagCtrl = this;
+  var color = "red";
+  var crossingType = "dl-crossing";
 
   sagCtrl.loadTestData = function(){
 	  //test data --start
@@ -27,6 +29,7 @@ function SagController($scope) {
 	  sagCtrl.sp3 = 2;
 	  sagCtrl.sp4 = 2;
 	  //test data --end
+	  color = "red";
 	 }
 
 	 sagCtrl.clearData = function(){
@@ -199,6 +202,11 @@ function SagController($scope) {
     			.x(d => d.x*xScaleFactor)
     			.y(d => height-2*margin-(d.y-Math.min.apply(null, ground))*yScaleFactor)
     			.interpolate("linear");
+
+	var lineAsIsFunction = d3.svg.line()
+    			.x(d => d.x)
+    			.y(d => d.y)
+    			.interpolate("linear");
 	
 	inner.forEach(function(unit, i){
 		var i =svgAuxillary.append("g")
@@ -312,15 +320,15 @@ function SagController($scope) {
 				.attr("alignment-baseline", "after-edge")
 				.attr("transform", "rotate(-90 "+textX+", "+textY+")");
 
-				measurement1 = [{"x": 0, "y": (height*.4)/yScaleFactor},
-									{"x": x/xScaleFactor, "y": (height*.4)/yScaleFactor}];
+				measurement1 = [{"x": 0, "y": (height*.9)},
+									{"x": x, "y": (height*.9)}];
 
-				measurement2 = [{"x": width/xScaleFactor, "y": (height*.4)/yScaleFactor},
-									{"x": x/xScaleFactor, "y": (height*.4)/yScaleFactor}];
+				measurement2 = [{"x": width, "y": (height*.9)},
+									{"x": x, "y": (height*.9)}];
 
 				leftMeasurement = custLineContainer
 				.append("path")
-                .attr("d", polesFunction(measurement1))
+                .attr("d", lineAsIsFunction(measurement1))
                 .attr("stroke", "red")
                 .attr("stroke-width", 1)
                 .attr("fill", "none")
@@ -337,7 +345,7 @@ function SagController($scope) {
 
     			rightMeasurement = custLineContainer
 				.append("path")
-                .attr("d", polesFunction(measurement2))
+                .attr("d", lineAsIsFunction(measurement2))
                 .attr("stroke", "red")
                 .attr("stroke-width", 1)
                 .attr("fill", "none")
@@ -356,12 +364,45 @@ function SagController($scope) {
 
 		function handleClick(){
 			var wireCoord = d3.select('circle.circle-vertical-wire');
-			var groundCoord = d3.selectAll('circle.circle-vertical-ground');
+			var groundCoord = d3.selectAll('circle.circle-vertical-ground');			
 			//#canvas > svg > g.g-cont > g > circle.circle-vertical-wire
 			console.log("Elevation Coord:", wireCoord.attr('cx')/xScaleFactor, wireCoord.attr('cy')/yScaleFactor);
 			console.log("Ground Coord:", groundCoord.attr('cx')/xScaleFactor, groundCoord.attr('cy')/yScaleFactor);
 			console.log("Height:", (groundCoord.attr('cy') - wireCoord.attr('cy'))/yScaleFactor);
 			console.log('--------------------------------------------------------------------');
+			
+			var mLine = [{"x": wireCoord.attr('cx'), "y": wireCoord.attr('cy')},
+						 {"x": groundCoord.attr('cx'), "y": groundCoord.attr('cy')}];
+			
+			var textCoord = {"x": wireCoord.attr('cx'),
+							 "y": (parseFloat(groundCoord.attr('cy'))+parseFloat(wireCoord.attr('cy')))/2};
+			var textVal = parseFloat((groundCoord.attr('cy')-wireCoord.attr('cy'))/yScaleFactor).toFixed(2);
+			
+			var one = svgAuxillary.append("g")
+							.attr('class', crossingType)
+							.append("path")
+                            .attr("d", lineAsIsFunction(mLine))
+                            .attr("stroke", color)
+                            .attr("stroke-width", 1)
+                            .attr("stroke-dasharray", ("10,3"))
+                            .attr("fill", "none")
+    						.attr('class', crossingType);
+
+			d3.selectAll("g.aux-line").append("text")
+				.attr("x", textCoord.x)
+				.attr("y", textCoord.y)
+				.attr("text-anchor", "middle")
+				.attr("alignment-baseline", "after-edge")
+				.text(textVal)
+				.attr("font-family", "Arial Black")
+		       	.attr("font-size", "1em")
+		       	.attr("fill", color)
+		        .attr("transform", "rotate(-90 "+textCoord.x+", "+textCoord.y+")");
+
+			color = "blue";
+			crossingType = "aux-crossing";
+			console.log(mLine);
+			console.log(one);
 		}
   }
 
