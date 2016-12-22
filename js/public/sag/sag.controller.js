@@ -171,7 +171,7 @@ function SagController($scope) {
 		.attr("y", poleAcy)
 		.attr("text-anchor", "middle")
 		.attr("alignment-baseline", "before-edge")
-		.text(poleAdy)
+		.text(poleAdy+ " (pole A)")
 		.attr("font-family", "Arial Black")
        	.attr("font-size", "1em")
        	.attr("fill", "grey")
@@ -186,7 +186,7 @@ function SagController($scope) {
 		.attr("y", poleBcy)
 		.attr("text-anchor", "middle")
 		.attr("alignment-baseline", "after-edge")
-		.text(poleBdy)
+		.text(poleBdy+" (pole B)")
 		.attr("font-family", "Arial Black")
        	.attr("font-size", "1em")
        	.attr("fill", "grey")
@@ -195,8 +195,8 @@ function SagController($scope) {
 //poles geomentry -ends	
 //mid and 1/4 lines -starts
 	const inner = [[{"x": sagCtrl.sp1, "y": sagCtrl.AQuatGr},{"x": sagCtrl.sp1, "y": sagCtrl.AQuatEl}],
-				  [{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midgr},{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midel}],
-				  [{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatGr},{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatEl}]];
+				   [{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midgr},{"x": sagCtrl.sp1+sagCtrl.sp2, "y": sagCtrl.Midel}],
+				   [{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatGr},{"x": sagCtrl.sp1+sagCtrl.sp2+sagCtrl.sp3, "y": sagCtrl.BQuatEl}]];
 	
 	var innnerLinesFunction = d3.svg.line()
     			.x(d => d.x*xScaleFactor)
@@ -208,32 +208,37 @@ function SagController($scope) {
     			.y(d => d.y)
     			.interpolate("linear");
 	
-	inner.forEach(function(unit, i){
-		var i =svgAuxillary.append("g")
-							.attr('class', 'aux-line')
-               				.append('path')
-                            .attr("d", polesFunction(unit))
-                            .attr("stroke", "black")
-                            .attr("stroke-dasharray", ("10,3"))
-                            .attr("stroke-width", 1)
-                            .attr("fill", "none")
-    						.attr('class','inner-aux-line');
-    	
-    	var cx = unit[0].x*xScaleFactor;
-    	var cy = height-2*margin-((unit[0].y+unit[1].y)/2-Math.min.apply(null, ground))*yScaleFactor
-    	var dy = parseFloat(unit[1].y-unit[0].y).toFixed(2);
+	var auxLines = svgAuxillary.selectAll("g.aux-line")
+				.data(inner).enter()
+				.append("g")
 
-		d3.selectAll("g.aux-line").append("text")
-		.attr("x", cx)
-		.attr("y", cy)
+	auxLines.attr('class', 'aux-line')
+               	.append('path')
+                .attr("d", d => polesFunction(d))
+                .attr("stroke", "black")
+                .attr("stroke-dasharray", ("10,3"))
+                .attr("stroke-width", 1)
+                .attr("fill", "none")
+    			.attr('class','inner-aux-line');
+    	
+    	// var cx = unit[0].x*xScaleFactor;
+    	// var cy = height-2*margin-((unit[0].y+unit[1].y)/2-Math.min.apply(null, ground))*yScaleFactor
+    	// var dy = parseFloat(unit[1].y-unit[0].y).toFixed(2);
+
+		auxLines.append("text")
+		.attr("x", d => d[0].x*xScaleFactor)
+		.attr("y", d => height-2*margin-((d[0].y+d[1].y)/2-Math.min.apply(null, ground))*yScaleFactor)
 		.attr("text-anchor", "middle")
 		.attr("alignment-baseline", "after-edge")
-		.text(dy)
+		.text(function(d,i){ if (i == 1){return parseFloat(d[1].y-d[0].y).toFixed(2) + " (MID)"} else {return parseFloat(d[1].y-d[0].y).toFixed(2) + " (1/4)"}})
 		.attr("font-family", "Arial Black")
        	.attr("font-size", "1em")
        	.attr("fill", "grey")
-        .attr("transform", "rotate(-90 "+cx+", "+cy+")");
-	});		
+        .attr("transform", rotateThis);
+			
+	function rotateThis(d,i){
+		return "rotate(-90 "+$(this).attr('x')+", "+$(this).attr('y')+")";	
+	}
 // mid and 1/4 lines -ends
 	
 	// measurement lines -start
