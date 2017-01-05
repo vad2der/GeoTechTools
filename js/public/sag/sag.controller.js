@@ -430,41 +430,32 @@ function SagController($scope, TableViewService) {
 
 			if(crossingType == "dl-crossing"){
 				name = "CROSSING";
-				sagCtrl.tableContent.zero = parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2);
+				sagCtrl.zero = parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2);
+				sagCtrl.tableContent.forEach(function(entry){
+					entry.chain = (entry.chain.toFixed(2) - parseFloat(sagCtrl.zero).toFixed(2)).toFixed(2);
+				})
 			}else{name = "";}
 
-			sagCtrl.tableContent.forEach(function(entry){
-				entry.chain = entry.chain - sagCtrl.tableContent.zero;
-			})
+			
 
-			updateTable({"chain": parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2) - sagCtrl.tableContent.zero,
+			updateTable({"chain": (parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2) - sagCtrl.zero).toFixed(2),
 						 "groundElevation": parseFloat(groundCoord.attr('cy')/yScaleFactor).toFixed(2),
 						 "wireElevation": parseFloat(wireCoord.attr('cy')/yScaleFactor).toFixed(2),
 						 "name": name});
 
 			color = "blue";
 			crossingType = "aux-crossing";
+			$scope.$digest();			
 		}
 
 		function updateTable(newCrossing){
 			sagCtrl.tableContent.push(newCrossing);
 			
 			sagCtrl.tableContent.sort(function (a, b) {
-		  	if (a.chain > b.chain) {
-			    return 1;
-		  	}
-		  	if (a.chain < b.chain) {
-		    	return -1;
-		  	}		  
-		  		return 0;
+		  		return parseFloat(a.chain).toFixed(2) - parseFloat(b.chain).toFixed(2);
 			});
-
-			// function pushTable () {			
-			// 	sagCtrl.tableContent = tableContent;
-			// 	console.log(sagCtrl.tableContent);
-			// 	TableViewService.setTable(sagCtrl.tableContent);
-			// }
-			// pushTable();
+			console.log(sagCtrl.tableContent);
+			TableViewService.setTable(sagCtrl.tableContent);
 		}
 	}
 })(window);

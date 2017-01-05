@@ -6,12 +6,16 @@ angular.module('public')
 
 function TableViewService() {
 	const service = this;
+	service.changed = false;
+
 	service.setTable = function(rows){
 		service.tableContent = rows;
 		console.log("table set");
+		service.changed = !service.changed;
 	};
 	service.getTable = function(){
 		console.log("table got");
+		console.log(service.tableContent);
 		return service.tableContent;
 	};
 }
