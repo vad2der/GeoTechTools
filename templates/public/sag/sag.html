@@ -114,13 +114,20 @@
   
   		<div>
   	
-  			<table class=table>
+  			<table class="table table-bordered">
+  				<tr>
+  					<th class=text-center>CHAINAGE</td>  					
+  					<th class=text-center>GROUND ELEVATION</th>
+  					<th class=text-center>WIRE ELEVATION</th>
+  					<th class=text-center>HEIGHT</th>
+  					<th class=text-center>NAME</th>
+  				</tr>
   				<tr ng-repeat="row in sagCtrl.tableContent">
-  					<td>{{ row.chain }}</td>  					
-  					<td>{{ row.groundElevation }}</td>
-  					<td>{{ row.wireElevation }}</td>
-  					<td>{{ parseFloat(row.wireElevation - row.groundElevation).toFixed(2) }}</td>
-  					<td>{{ row.name | uppercase }}</td>
+  					<td class=text-right>{{ row.chain | chainageFilter:1 }}</td>  					
+  					<td class=text-right>{{ row.groundElevation | number:2 }}</td>
+  					<td class=text-right>{{ row.wireElevation | number:2 }}</td>
+  					<td class=text-right>{{ row.wireElevation - row.groundElevation | number:2 }}</td>
+  					<td class=text-left>{{ row.name | uppercase }}</td>
   				</tr>
   			</table>
   		</div>  	

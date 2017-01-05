@@ -4,8 +4,8 @@
 angular.module('public')
 .controller('SagController', SagController);
 
-SagController.$inject = ['$scope', 'TableViewService'];
-function SagController($scope, TableViewService) {
+SagController.$inject = ['$scope'];
+function SagController($scope) {
 	var sagCtrl = this;
 	let color = "red";
 	let crossingType = "dl-crossing";  
@@ -322,24 +322,24 @@ function SagController($scope, TableViewService) {
 			var overlays2 = Intersection.intersectShapes(shape2, linePath);			
 
 			custLineContainer
-				.selectAll('circle.circle-vertical-wire')
+				.selectAll('circle.circle-vertical-ground')
 				.data(overlays1.points).enter()
 				.append('circle')
 				.attr('cx', d => d.x)
 				.attr('cy', d => d.y)
 				.attr('r',5)
 				.attr("fill", "red")
-				.attr('class','circle-vertical-wire');
+				.attr('class','circle-vertical-ground');
 
 			custLineContainer
-				.selectAll('circle.circle-vertical-ground')
+				.selectAll('circle.circle-vertical-wire')
 				.data(overlays2.points).enter()
 				.append('circle')
 				.attr('cx', d => d.x)
 				.attr('cy', d => d.y)
 				.attr('r',5)
 				.attr("fill", "red")
-				.attr('class','circle-vertical-ground');
+				.attr('class','circle-vertical-wire');
 
 			textX = (overlays2.points[0].x + overlays1.points[0].x)/2;
 			textY = (overlays2.points[0].y + overlays1.points[0].y)/2;
@@ -403,7 +403,7 @@ function SagController($scope, TableViewService) {
 						 {"x": groundCoord.attr('cx'), "y": groundCoord.attr('cy')}];
 			let textCoord = {"x": wireCoord.attr('cx'),
 							 "y": (parseFloat(groundCoord.attr('cy'))+parseFloat(wireCoord.attr('cy')))/2};
-			let textVal = parseFloat((groundCoord.attr('cy')-wireCoord.attr('cy'))/yScaleFactor).toFixed(2);
+			let textVal = parseFloat((wireCoord.attr('cy')-groundCoord.attr('cy'))/yScaleFactor).toFixed(2);
 			
 			svgAuxillary.append("g")
 						.attr('class', crossingType)
@@ -454,8 +454,8 @@ function SagController($scope, TableViewService) {
 			sagCtrl.tableContent.sort(function (a, b) {
 		  		return parseFloat(a.chain).toFixed(2) - parseFloat(b.chain).toFixed(2);
 			});
-			console.log(sagCtrl.tableContent);
-			TableViewService.setTable(sagCtrl.tableContent);
+			//console.log(sagCtrl.tableContent);
+			
 		}
 	}
 })(window);
