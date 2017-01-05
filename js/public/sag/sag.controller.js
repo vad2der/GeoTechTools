@@ -88,6 +88,8 @@ function SagController($scope) {
 		$scope.grndElevationForm.$setUntouched();
 
 		sagCtrl.tableContent = null;
+		crossingType = "dl-crossing";
+		color = "red";
 	}
   
   	sagCtrl.drawDiagram = function(){
