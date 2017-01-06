@@ -128,12 +128,11 @@
   					<td class=text-right>{{ row.groundElevation | number:2 }}</td>
   					<td class=text-right>{{ row.wireElevation | number:2 }}</td>
   					<td class=text-right>{{ row.wireElevation - row.groundElevation | number:2 }}</td>
-  					<td class=text-left>
-  						<div layout-gt-sm="row" class="layout-gt-sm-row">
-  							<md-input-container>	  							
-  								<textarea type="text" ng-model="row.name" max-rows=1 maxlength=25 placeholder="{{ row.name | uppercase }}">
-							</md-input-container>
-						</div>
+  					<td class=text-left>  						
+  						<md-input-container>
+  							<!-- <label>{{ row.name | uppercase }}</label>	 -->
+  							<input type="text" ng-model="row.name" md-maxlength=30 placeholder="{{ row.name | uppercase }}">
+						</md-input-container>						
   					</td>
   				</tr>
   			</table>
