@@ -12,6 +12,7 @@ function SagController($scope) {
 	$scope.isDisabledSagElevationForm = undefined;
 	$scope.isDisabledSagSpanForm = undefined;
 	$scope.isDisabledGrndElevationForm = undefined;
+	sagCtrl.stage = 0;
 
 	let coordinates = [0, 0];
 	let x, y;
@@ -87,15 +88,16 @@ function SagController($scope) {
 		$scope.sagSpanForm.$setUntouched();
 		$scope.grndElevationForm.$setUntouched();
 
-		sagCtrl.tableContent = null;
+		sagCtrl.tableContent = undefined;
 		crossingType = "dl-crossing";
 		color = "red";
+		sagCtrl.stage = 0;
 	}
   
   	sagCtrl.drawDiagram = function(){
 
 	  	if (!$scope.sagElevationForm.$valid || !$scope.sagSpanForm.$valid || !$scope.grndElevationForm.$valid){return};
-
+	  	sagCtrl.stage = 2;
 	  	var wire = [parseFloat(sagCtrl.AEl), parseFloat(sagCtrl.AQuatEl), parseFloat(sagCtrl.Midel), parseFloat(sagCtrl.BQuatEl), parseFloat(sagCtrl.BEl)];
 	  	var ground = [parseFloat(sagCtrl.AGr), parseFloat(sagCtrl.AQuatGr), parseFloat(sagCtrl.Midgr), parseFloat(sagCtrl.BQuatGr), parseFloat(sagCtrl.BGr)];
 	  	const yd = (Math.max.apply(null, wire) - Math.min.apply(null, ground));
@@ -267,7 +269,16 @@ function SagController($scope) {
 	// mid and 1/4 lines -ends
   	}
 
+  	$scope.$watch('sagElevationForm.$dirty', setStageTo1);
+  	$scope.$watch('sagSpanForm.$dirty', setStageTo1);
+  	$scope.$watch('grndElevationForm.$dirty', setStageTo1);
+
+  	function setStageTo1(n){
+  		if(n && sagCtrl.stage == 0){sagCtrl.stage = 1;}
+  	}
+
     sagCtrl.secureInput = function(){
+    	sagCtrl.stage = 3;
 		$scope.isDisabledSagElevationForm = true;
 	  	$scope.isDisabledSagSpanForm = true;
 	  	$scope.isDisabledGrndElevationForm = true;

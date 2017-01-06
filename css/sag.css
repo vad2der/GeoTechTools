@@ -40,3 +40,26 @@
 div.text-center {
 	margin: 0 auto 1em auto;
 }
+
+td.text-left{
+	padding: 0;
+}
+
+
+
+/*** overwrite angular material ***/
+md-input-container {
+	margin-bottom: 0;
+	margin-top: 0;
+	padding: 0;
+	width: 100%;
+}
+
+md-input-container textarea{
+	padding: 0;
+	border: 0;
+	font-weight: 0;
+	height: 1.5em;
+	width: 100%;
+	text-transform: uppercase;
+}
