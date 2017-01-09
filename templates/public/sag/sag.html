@@ -5,18 +5,28 @@
 	<div  ng-controller="SagController as sagCtrl">
   		<h2 id="menu-categories-title" class="text-center">Wire Sag Modelling</h2>
   		<div class="text-center"> 
-  			<span ng-if="sagCtrl.stage == 0">Enter the sag parameters or try <button class="btn btn-default" ng-click=sagCtrl.loadTestData();>Load Test Data</button></span>
-  			<span ng-if="sagCtrl.stage == 1">You still can <button class="btn btn-default" ng-click=sagCtrl.loadTestData();>Load Test Data</button> or <button class="btn btn-default" ng-click=sagCtrl.clearData();>Clear Data</button></span>
-  			<span ng-if="sagCtrl.stage == 2">To erase inputs <button class="btn btn-default" ng-click=sagCtrl.clearData();>Clear Data</button> or <button class="btn btn-default" ng-click=sagCtrl.secureInput();>Secure Inputs</button> to continue on custom crossings</span>
-  			<span ng-if="sagCtrl.stage == 3">Click on the diagram to enter custom crossing lertical or <button class="btn btn-default" ng-click=sagCtrl.clearData();>Clear Data</button> to start again</span>
+  			<span ng-if="sagCtrl.stage == 0">Enter the sag parameters or try <md-button class="md-raised" ng-click=sagCtrl.loadTestData();>Load Test Data</md-button></span>
+  			<span ng-if="sagCtrl.stage == 1">You still can  <md-button class="md-raised" ng-click=sagCtrl.loadTestData();>Load Test Data</md-button> or <md-button class="md-raised" ng-click=sagCtrl.clearData();>Clear Data</md-button></span>
+  			<span ng-if="sagCtrl.stage == 2">To erase inputs <md-button class="md-raised" ng-click=sagCtrl.clearData();>Clear Data</md-button> or <md-button class="md-raised" ng-click=sagCtrl.secureInput();>Secure Inputs</md-button> to continue on custom crossings</span>
+  			<span ng-if="sagCtrl.stage == 3">Click on the diagram to enter custom crossing lertical or <md-button class="md-raised" ng-click=sagCtrl.clearData();>Clear Data</md-button> to start again</span>
   		</div>
-  		<form name=sagElevationForm ng-keyup=sagCtrl.drawDiagram(); novalidate>
+  		<form name=sagElevationForm ng-keyup=sagCtrl.drawDiagram();>
   			<fieldset ng-disabled="isDisabledSagElevationForm">
-  				<div class=row id=elevation>
+  				<div layout=row class=row id=elevation>
+
+  					<!-- <md-input-container flex="10">
+          				<label>Elev. at Pole</label>
+          				<input required id=Ael ng-model=sagCtrl.AEl name=AEl type=number step=0.1 min=0.00>
+          				<div ng-messages="projectForm.clientName.$error">
+            				<div ng-message="required">This is required.</div>
+          				</div>
+          			</md-input-container> -->
+
 	  				<div class="col-lg-1 col-lg-pull-1 form-group" ng-class="{ 'has-error': sagElevationForm.AEl.$error.required  && sagElevationForm.AEl.$touched}">
 	  					<span ng-show="sagElevationForm.AEl.$error.required && sagElevationForm.AEl.$touched" class="help-block">Required Value</span>
 		  				<input class=form-control id=Ael ng-model=sagCtrl.AEl name=AEl placeholder="Elevation at Pole" type=number step=0.1 min=0.00 required>	  	
 					</div>
+
 					<div class="col-lg-1"></div>
 					<div class="col-lg-2 form-group" ng-class="{ 'has-error': sagElevationForm.AQuatEl.$error.required  && sagElevationForm.AQuatEl.$touched}">
 						<span ng-show="sagElevationForm.AQuatEl.$error.required && sagElevationForm.AQuatEl.$touched" class="help-block">Required Value</span>
@@ -129,9 +139,8 @@
   					<td class=text-right>{{ row.wireElevation | number:2 }}</td>
   					<td class=text-right>{{ row.wireElevation - row.groundElevation | number:2 }}</td>
   					<td class=text-left>  						
-  						<md-input-container>
-  							<!-- <label>{{ row.name | uppercase }}</label>	 -->
-  							<input type="text" ng-model="row.name" md-maxlength=30 placeholder="{{ row.name | uppercase }}">
+  						<md-input-container md-no-float>  							
+  							<input type="text" ng-model="row.name" md-maxlength=30 maxlength=30 placeholder="{{ row.name | uppercase }}">
 						</md-input-container>						
   					</td>
   				</tr>

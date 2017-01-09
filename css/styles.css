@@ -35,3 +35,8 @@ ul {
 .button-group{
   margin: 0 2em 0 2em; 
 }
+
+
+main {
+  min-height: calc(100vh - 144px);
+}

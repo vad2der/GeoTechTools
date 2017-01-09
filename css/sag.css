@@ -48,11 +48,11 @@ td.text-left{
 
 
 /*** overwrite angular material ***/
-md-input-container div.md-errors-spacer{
+table md-input-container div.md-errors-spacer{
 	display:none;
 }
 
-md-input-container label{
+table md-input-container label{
 	display:none;
 }
 md-input-container {
