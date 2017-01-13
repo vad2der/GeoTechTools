@@ -140,7 +140,7 @@
   					<td class=text-right>{{ row.wireElevation - row.groundElevation | number:2 }}</td>
   					<td class=text-left>  						
   						<md-input-container md-no-float>  							
-  							<input type="text" ng-model="row.name" md-maxlength=30 maxlength=30 placeholder="{{ row.name | uppercase }}">
+  							<input type="text" ng-model="row.name" md-maxlength=30 maxlength=30 placeholder="{{ row.name | uppercase }}" aria-label="crossing-enrty">
 						</md-input-container>						
   					</td>
   				</tr>

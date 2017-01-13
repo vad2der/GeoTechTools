@@ -19,8 +19,8 @@ function SagController($scope) {
 	let custLineContainer;
 	let line;
 	let textX, textY;
-	let measurement1, measurement2;
-	let leftMeasurement, rightMeasurement;
+	let measurement1, measurement2, measurementX;
+	let leftMeasurement, rightMeasurement, xMeasurement;
 
 	const width = 1200;//document.getElementById("canvas").clientWidth;
   	const height = 400;//document.getElementById("canvas").clientHeight;
@@ -34,24 +34,27 @@ function SagController($scope) {
 	let lineAsIsFunction;
 	let svgAuxillary;
 
+	var wire;
+	var ground;
+
   	sagCtrl.loadTestData = function(){
 		//test data --start
-		sagCtrl.AEl = 8;
-		sagCtrl.AQuatEl = 6.5;
-		sagCtrl.Midel = 6;
-		sagCtrl.BQuatEl = 6.5;
-		sagCtrl.BEl = 8;
+		sagCtrl.AEl = 351.72;
+		sagCtrl.AQuatEl = 351.22;
+		sagCtrl.Midel = 350.93;
+		sagCtrl.BQuatEl = 351.29;
+		sagCtrl.BEl = 351.77;
 
-		sagCtrl.AGr = 2.1;
-		sagCtrl.AQuatGr = 2.2;
-		sagCtrl.Midgr = 2.1;
-		sagCtrl.BQuatGr = 2;
-		sagCtrl.BGr = 1.9;
+		sagCtrl.AGr = 345.80;
+		sagCtrl.AQuatGr = 345.62;
+		sagCtrl.Midgr = 345.58;
+		sagCtrl.BQuatGr = 345.48;
+		sagCtrl.BGr = 345.46;
 
-		sagCtrl.sp1 = 2;
-		sagCtrl.sp2 = 2;
-		sagCtrl.sp3 = 2;
-		sagCtrl.sp4 = 2;
+		sagCtrl.sp1 = 14.9;
+		sagCtrl.sp2 = 15.1;
+		sagCtrl.sp3 = 20.0;
+		sagCtrl.sp4 = 11.1;
 		//test data --end
 		color = "red";
 
@@ -98,8 +101,8 @@ function SagController($scope) {
 
 	  	if (!$scope.sagElevationForm.$valid || !$scope.sagSpanForm.$valid || !$scope.grndElevationForm.$valid){return};
 	  	sagCtrl.stage = 2;
-	  	var wire = [parseFloat(sagCtrl.AEl), parseFloat(sagCtrl.AQuatEl), parseFloat(sagCtrl.Midel), parseFloat(sagCtrl.BQuatEl), parseFloat(sagCtrl.BEl)];
-	  	var ground = [parseFloat(sagCtrl.AGr), parseFloat(sagCtrl.AQuatGr), parseFloat(sagCtrl.Midgr), parseFloat(sagCtrl.BQuatGr), parseFloat(sagCtrl.BGr)];
+	  	wire = [parseFloat(sagCtrl.AEl), parseFloat(sagCtrl.AQuatEl), parseFloat(sagCtrl.Midel), parseFloat(sagCtrl.BQuatEl), parseFloat(sagCtrl.BEl)];
+	  	ground = [parseFloat(sagCtrl.AGr), parseFloat(sagCtrl.AQuatGr), parseFloat(sagCtrl.Midgr), parseFloat(sagCtrl.BQuatGr), parseFloat(sagCtrl.BGr)];
 	  	const yd = (Math.max.apply(null, wire) - Math.min.apply(null, ground));
 	  	yScaleFactor = (height - 2*margin)/yd; //units in height pixels  	
 	  	xScaleFactor = (width - 2*margin)/(parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4));
@@ -190,7 +193,7 @@ function SagController($scope) {
 
 		let poleAcx = 0;
 	    let poleAcy = height-2*margin-((poleA[1].y-poleA[0].y)/2)*yScaleFactor;
-	    let poleAdy = poleA[1].y-poleA[0].y;
+	    let poleAdy = parseFloat(poleA[1].y-poleA[0].y).toFixed(2);
 
 		d3.selectAll("g.poleA").append("text")
 			.attr("x", poleAcx)
@@ -205,7 +208,7 @@ function SagController($scope) {
 
 	    let poleBcx = (parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4))*xScaleFactor;
 	    let poleBcy = height-2*margin-((poleB[1].y-poleB[0].y)/2)*yScaleFactor;
-	    let poleBdy = poleB[1].y-poleB[0].y;
+	    let poleBdy = parseFloat(poleB[1].y-poleB[0].y).toFixed(2);
 
 		d3.selectAll("g.poleB").append("text")
 			.attr("x", poleBcx)
@@ -372,103 +375,123 @@ function SagController($scope) {
 
 			measurement2 = [{"x": width, "y": (height*.9)},
 							{"x": x, "y": (height*.9)}];
+			if (color == "red"){
 
-			leftMeasurement = custLineContainer
-				.append("path")
-                .attr("d", lineAsIsFunction(measurement1))
-                .attr("stroke", "red")
-                .attr("stroke-width", 1)
-                .attr("fill", "none")
-    			.attr('class','left-measurement');
+				leftMeasurement = custLineContainer
+					.append("path")
+	                .attr("d", lineAsIsFunction(measurement1))
+	                .attr("stroke", "red")
+	                .attr("stroke-width", 1)
+	                .attr("fill", "none")
+	    			.attr('class','left-measurement');
 
-    		custLineContainer
-				.append("text")
-				.attr("x", function(){return leftMeasurement[0][0].getTotalLength()/2;})
-				.attr("y", height*.88)
-				.attr('class','curr-label')
-				.text(function(){return parseFloat(leftMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);})
-				.attr("text-anchor", "middle")
-				.attr("alignment-baseline", "after-edge");
+	    		custLineContainer
+					.append("text")
+					.attr("x", function(){return leftMeasurement[0][0].getTotalLength()/2;})
+					.attr("y", height*.88)
+					.attr('class','curr-label')
+					.text(function(){return parseFloat(leftMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);})
+					.attr("text-anchor", "middle")
+					.attr("alignment-baseline", "after-edge");
 
-    		rightMeasurement = custLineContainer
-				.append("path")
-                .attr("d", lineAsIsFunction(measurement2))
-                .attr("stroke", "red")
-                .attr("stroke-width", 1)
-                .attr("fill", "none")
-    			.attr('class','right-measurement');
+	    		rightMeasurement = custLineContainer
+					.append("path")
+	                .attr("d", lineAsIsFunction(measurement2))
+	                .attr("stroke", "red")
+	                .attr("stroke-width", 1)
+	                .attr("fill", "none")
+	    			.attr('class','right-measurement');
 
-    		custLineContainer
-				.append("text")
-				.attr("x", function(){return leftMeasurement[0][0].getTotalLength()+rightMeasurement[0][0].getTotalLength()/2;})
-				.attr("y", height*.88)
-				.attr('class','curr-label')
-				.text(function(){return parseFloat(rightMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);})
-				.attr("text-anchor", "middle")
-				.attr("alignment-baseline", "after-edge");
-			}			
-		}
+	    		custLineContainer
+					.append("text")
+					.attr("x", function(){return leftMeasurement[0][0].getTotalLength()+rightMeasurement[0][0].getTotalLength()/2;})
+					.attr("y", height*.88)
+					.attr('class','curr-label')
+					.text(function(){return parseFloat(rightMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);})
+					.attr("text-anchor", "middle")
+					.attr("alignment-baseline", "after-edge");
+			} else if (color == "blue"){
 
-		function handleClick(){
-			let wireCoord = d3.select('circle.circle-vertical-wire');
-			let groundCoord = d3.selectAll('circle.circle-vertical-ground');			
-			let mLine = [{"x": wireCoord.attr('cx'), "y": wireCoord.attr('cy')},
-						 {"x": groundCoord.attr('cx'), "y": groundCoord.attr('cy')}];
-			let textCoord = {"x": wireCoord.attr('cx'),
-							 "y": (parseFloat(groundCoord.attr('cy'))+parseFloat(wireCoord.attr('cy')))/2};
-			let textVal = parseFloat((wireCoord.attr('cy')-groundCoord.attr('cy'))/yScaleFactor).toFixed(2);
-			
-			svgAuxillary.append("g")
-						.attr('class', crossingType)
-						.append("path")
-                        .attr("d", lineAsIsFunction(mLine))
-                        .attr("stroke", color)
-                        .attr("stroke-width", 1)
-                        .attr("stroke-dasharray", ("10,3"))
-                        .attr("fill", "none")
-    					.attr('class', crossingType);
+				measurementX = [{"x": sagCtrl.zero*xScaleFactor, "y": (height*.9)},
+								{"x": x, "y": (height*.9)}];
 
-			d3.selectAll("g.aux-line").append("text")
-				.attr("x", textCoord.x)
-				.attr("y", textCoord.y)
-				.attr("text-anchor", "middle")
-				.attr("alignment-baseline", "after-edge")
-				.text(textVal)
-				.attr("font-family", "Arial Black")
-		       	.attr("font-size", "1em")
-		       	.attr("fill", color)
-		        .attr("transform", "rotate(-90 "+textCoord.x+", "+textCoord.y+")");
+				xMeasurement = custLineContainer
+					.append("path")
+	                .attr("d", lineAsIsFunction(measurementX))
+	                .attr("stroke", "red")
+	                .attr("stroke-width", 1)
+	                .attr("fill", "none")
+	    			.attr('class','left-measurement');
 
-			let name;
-
-			if(crossingType == "dl-crossing"){
-				name = "CROSSING";
-				sagCtrl.zero = parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2);
-				sagCtrl.tableContent.forEach(function(entry){
-					entry.chain = (entry.chain.toFixed(2) - parseFloat(sagCtrl.zero).toFixed(2)).toFixed(2);
-				})
-			}else{name = "";}
-
-			
-
-			updateTable({"chain": (parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2) - sagCtrl.zero).toFixed(2),
-						 "groundElevation": parseFloat(groundCoord.attr('cy')/yScaleFactor).toFixed(2),
-						 "wireElevation": parseFloat(wireCoord.attr('cy')/yScaleFactor).toFixed(2),
-						 "name": name});
-
-			color = "blue";
-			crossingType = "aux-crossing";
-			$scope.$digest();			
-		}
-
-		function updateTable(newCrossing){
-			sagCtrl.tableContent.push(newCrossing);
-			
-			sagCtrl.tableContent.sort(function (a, b) {
-		  		return parseFloat(a.chain).toFixed(2) - parseFloat(b.chain).toFixed(2);
-			});
-			//console.log(sagCtrl.tableContent);
-			
-		}
+	    		custLineContainer
+					.append("text")
+					.attr("x", function(){if (x < sagCtrl.zero*xScaleFactor){return sagCtrl.zero*xScaleFactor - xMeasurement[0][0].getTotalLength()/2;}else if(x > sagCtrl.zero*xScaleFactor){return sagCtrl.zero*xScaleFactor + xMeasurement[0][0].getTotalLength()/2;}})
+					.attr("y", height*.88)
+					.attr('class','curr-label')
+					.text(function(){if (x < sagCtrl.zero*xScaleFactor){return -parseFloat(xMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);}else if(x > sagCtrl.zero*xScaleFactor){return parseFloat(xMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);}})
+					.attr("text-anchor", "middle")
+					.attr("alignment-baseline", "after-edge")
+			}
+		}			
 	}
+
+	function handleClick(){
+		let wireCoord = d3.select('circle.circle-vertical-wire');
+		let groundCoord = d3.selectAll('circle.circle-vertical-ground');
+		
+		let mLine = [{"x": wireCoord.attr('cx'), "y": wireCoord.attr('cy')},
+					 {"x": groundCoord.attr('cx'), "y": groundCoord.attr('cy')}];
+		let textCoord = {"x": wireCoord.attr('cx'),
+						 "y": (parseFloat(groundCoord.attr('cy'))+parseFloat(wireCoord.attr('cy')))/2};
+		let textVal = parseFloat((wireCoord.attr('cy')-groundCoord.attr('cy'))/yScaleFactor).toFixed(2);
+			
+		svgAuxillary.append("g")
+					.attr('class', crossingType)
+					.append("path")
+                    .attr("d", lineAsIsFunction(mLine))
+                    .attr("stroke", color)
+                    .attr("stroke-width", 1)
+                    .attr("stroke-dasharray", ("10,3"))
+                    .attr("fill", "none")
+    				.attr('class', crossingType);
+
+		d3.selectAll("g.aux-line").append("text")
+			.attr("x", textCoord.x)
+			.attr("y", textCoord.y)
+			.attr("text-anchor", "middle")
+			.attr("alignment-baseline", "after-edge")
+			.text(textVal)
+			.attr("font-family", "Arial Black")
+		    .attr("font-size", "1em")
+		    .attr("fill", color)
+		    .attr("transform", "rotate(-90 "+textCoord.x+", "+textCoord.y+")");
+
+		let name;
+		if(crossingType == "dl-crossing"){
+			name = "CROSSING";
+			sagCtrl.zero = parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2);
+			sagCtrl.tableContent.forEach(function(entry){
+				entry.chain = (entry.chain.toFixed(2) - parseFloat(sagCtrl.zero).toFixed(2)).toFixed(2);
+			})
+		}else{name = "";}
+
+		updateTable({"chain": (parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2) - sagCtrl.zero).toFixed(2),
+					 "groundElevation": parseFloat(groundCoord.attr('cy')/yScaleFactor + Math.min.apply(null, ground)).toFixed(2),
+					 "wireElevation": parseFloat(wireCoord.attr('cy')/yScaleFactor + Math.min.apply(null, ground)).toFixed(2),
+					 "name": name});
+
+		color = "blue";
+		crossingType = "aux-crossing";
+		$scope.$digest();			
+	}
+
+	function updateTable(newCrossing){
+		sagCtrl.tableContent.push(newCrossing);
+		
+		sagCtrl.tableContent.sort(function (a, b) {
+	  		return parseFloat(a.chain).toFixed(2) - parseFloat(b.chain).toFixed(2);
+		});
+		
+	}
+}
 })(window);
