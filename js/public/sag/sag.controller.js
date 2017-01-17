@@ -39,28 +39,32 @@ function SagController($scope) {
 
   	sagCtrl.loadTestData = function(){
 		//test data --start
-		sagCtrl.AEl = 351.72;
-		sagCtrl.AQuatEl = 351.22;
-		sagCtrl.Midel = 350.93;
-		sagCtrl.BQuatEl = 351.29;
-		sagCtrl.BEl = 351.77;
+		sagCtrl.AEl = 349.899;
+		sagCtrl.AQuatEl = 350.218;
+		sagCtrl.Midel = 350.727;
+		sagCtrl.BQuatEl = 351.3;
+		sagCtrl.BEl = 351.968;
 
-		sagCtrl.AGr = 345.80;
-		sagCtrl.AQuatGr = 345.62;
-		sagCtrl.Midgr = 345.58;
-		sagCtrl.BQuatGr = 345.48;
-		sagCtrl.BGr = 345.46;
+		sagCtrl.AGr = 344.399;
+		sagCtrl.AQuatGr = 344.278;
+		sagCtrl.Midgr = 344.397;
+		sagCtrl.BQuatGr = 344.380;
+		sagCtrl.BGr = 344.418;
 
-		sagCtrl.sp1 = 14.9;
-		sagCtrl.sp2 = 15.1;
-		sagCtrl.sp3 = 20.0;
-		sagCtrl.sp4 = 11.1;
+		sagCtrl.sp1 = 3.52;
+		sagCtrl.sp2 = 3.42;
+		sagCtrl.sp3 = 3.39;
+		sagCtrl.sp4 = 3.01;
 		//test data --end
 		color = "red";
 
-		$scope.sagElevationForm.AEl.$setDirty();
+		$scope.sagElevationForm.$setDirty();
 		$scope.sagSpanForm.$setDirty();
 		$scope.grndElevationForm.$setDirty();
+
+		$scope.sagElevationForm.$commitViewValue();
+		$scope.sagSpanForm.$setSubmitted();
+		$scope.grndElevationForm.$setSubmitted();
 	}
 
   	sagCtrl.clearData = function(){
@@ -90,6 +94,10 @@ function SagController($scope) {
 		$scope.sagElevationForm.$setUntouched();
 		$scope.sagSpanForm.$setUntouched();
 		$scope.grndElevationForm.$setUntouched();
+
+		$scope.sagElevationForm.$setPrestine();
+		$scope.sagSpanForm.$setPrestine();
+		$scope.grndElevationForm.$setPrestine();
 
 		sagCtrl.tableContent = undefined;
 		crossingType = "dl-crossing";
@@ -338,24 +346,24 @@ function SagController($scope) {
 			var overlays2 = Intersection.intersectShapes(shape2, linePath);			
 
 			custLineContainer
-				.selectAll('circle.circle-vertical-ground')
+				.selectAll('circle.circle-vertical-wire')
 				.data(overlays1.points).enter()
 				.append('circle')
 				.attr('cx', d => d.x)
 				.attr('cy', d => d.y)
 				.attr('r',5)
 				.attr("fill", "red")
-				.attr('class','circle-vertical-ground');
+				.attr('class','circle-vertical-wire');
 
 			custLineContainer
-				.selectAll('circle.circle-vertical-wire')
+				.selectAll('circle.circle-vertical-ground')
 				.data(overlays2.points).enter()
 				.append('circle')
 				.attr('cx', d => d.x)
 				.attr('cy', d => d.y)
 				.attr('r',5)
 				.attr("fill", "red")
-				.attr('class','circle-vertical-wire');
+				.attr('class','circle-vertical-ground');
 
 			textX = (overlays2.points[0].x + overlays1.points[0].x)/2;
 			textY = (overlays2.points[0].y + overlays1.points[0].y)/2;
@@ -443,7 +451,7 @@ function SagController($scope) {
 					 {"x": groundCoord.attr('cx'), "y": groundCoord.attr('cy')}];
 		let textCoord = {"x": wireCoord.attr('cx'),
 						 "y": (parseFloat(groundCoord.attr('cy'))+parseFloat(wireCoord.attr('cy')))/2};
-		let textVal = parseFloat((wireCoord.attr('cy')-groundCoord.attr('cy'))/yScaleFactor).toFixed(2);
+		let textVal = parseFloat(groundCoord.attr('cy') - (wireCoord.attr('cy'))/yScaleFactor).toFixed(2);
 			
 		svgAuxillary.append("g")
 					.attr('class', crossingType)
@@ -476,9 +484,11 @@ function SagController($scope) {
 		}else{name = "";}
 
 		updateTable({"chain": (parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2) - sagCtrl.zero).toFixed(2),
-					 "groundElevation": parseFloat(groundCoord.attr('cy')/yScaleFactor + Math.min.apply(null, ground)).toFixed(2),
-					 "wireElevation": parseFloat(wireCoord.attr('cy')/yScaleFactor + Math.min.apply(null, ground)).toFixed(2),
+					 "groundElevation": parseFloat((height - 2*margin - groundCoord.attr('cy'))/yScaleFactor + Math.min.apply(null, ground)).toFixed(2),
+					 "wireElevation": parseFloat((height - 2*margin - wireCoord.attr('cy'))/yScaleFactor + Math.min.apply(null, ground)).toFixed(2),
 					 "name": name});
+
+		console.log(height, margin, groundCoord.attr('cy'), wireCoord.attr('cy'));		
 
 		color = "blue";
 		crossingType = "aux-crossing";

@@ -12,15 +12,15 @@
   		</div>
   		<form name=sagElevationForm ng-keyup=sagCtrl.drawDiagram();>
   			<fieldset ng-disabled="isDisabledSagElevationForm">
-  				<div layout=row class=row id=elevation>
+  				<div layout=row class=row flex id=elevation>
 
-  					<!-- <md-input-container flex="10">
+  					<md-input-container flex="10">
           				<label>Elev. at Pole</label>
           				<input required id=Ael ng-model=sagCtrl.AEl name=AEl type=number step=0.1 min=0.00>
-          				<div ng-messages="projectForm.clientName.$error">
+          				<div ng-messages="sagElevationForm.AEl.$error" role=alert>
             				<div ng-message="required">This is required.</div>
           				</div>
-          			</md-input-container> -->
+          			</md-input-container>
 
 	  				<div class="col-lg-1 col-lg-pull-1 form-group" ng-class="{ 'has-error': sagElevationForm.AEl.$error.required  && sagElevationForm.AEl.$touched}">
 	  					<span ng-show="sagElevationForm.AEl.$error.required && sagElevationForm.AEl.$touched" class="help-block">Required Value</span>
