@@ -11,30 +11,15 @@
 	min-width:6.5em;
 }
 
-#ground, #elevation{
+/*#ground, #elevation{
 	margin: 0 auto 0 auto;
+}*/
+#span{
+	margin-top: 1.5em;
 }
 
 #Ael, #Bel, #Agr, #Bgr{
 	width: 11em;
-}
-#elevation > div > span{
-	font-size: 0.8em;
-}
-
-#elevation > div.col-lg-pull-1 > span,
-#elevation > div.col-lg-push-1 > span,
-#ground > div.col-lg-pull-1 > span,
-#ground > div.col-lg-push-1 > span{	
-	width: 235%;
-	float: left;
-	margin: 0;
-}
-
-#elevation > div.col-lg-2 > span{
-	width: 100%;
-	float: left;
-	margin: 0;
 }
 
 div.text-center {

@@ -95,9 +95,9 @@ function SagController($scope) {
 		$scope.sagSpanForm.$setUntouched();
 		$scope.grndElevationForm.$setUntouched();
 
-		$scope.sagElevationForm.$setPrestine();
-		$scope.sagSpanForm.$setPrestine();
-		$scope.grndElevationForm.$setPrestine();
+		// $scope.sagElevationForm.$setPrestine();
+		// $scope.sagSpanForm.$setPrestine();
+		// $scope.grndElevationForm.$setPrestine();
 
 		sagCtrl.tableContent = undefined;
 		crossingType = "dl-crossing";
@@ -418,8 +418,8 @@ function SagController($scope) {
 					.text(function(){return parseFloat(rightMeasurement[0][0].getTotalLength()/xScaleFactor).toFixed(2);})
 					.attr("text-anchor", "middle")
 					.attr("alignment-baseline", "after-edge");
+					
 			} else if (color == "blue"){
-
 				measurementX = [{"x": sagCtrl.zero*xScaleFactor, "y": (height*.9)},
 								{"x": x, "y": (height*.9)}];
 
@@ -451,7 +451,7 @@ function SagController($scope) {
 					 {"x": groundCoord.attr('cx'), "y": groundCoord.attr('cy')}];
 		let textCoord = {"x": wireCoord.attr('cx'),
 						 "y": (parseFloat(groundCoord.attr('cy'))+parseFloat(wireCoord.attr('cy')))/2};
-		let textVal = parseFloat(groundCoord.attr('cy') - (wireCoord.attr('cy'))/yScaleFactor).toFixed(2);
+		let textVal = parseFloat((groundCoord.attr('cy') - wireCoord.attr('cy'))/yScaleFactor).toFixed(2);
 			
 		svgAuxillary.append("g")
 					.attr('class', crossingType)
