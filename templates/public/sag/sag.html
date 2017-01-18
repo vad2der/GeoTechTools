@@ -62,7 +62,7 @@
 
   		<form name=sagSpanForm ng-keyup=sagCtrl.drawDiagram(); novalidate>
   			<fieldset ng-disabled="isDisabledSagSpanForm">
-  				<div layout=row class=row id=span>
+  				<div layout=row flex class=row id=span>
   					
   					<span flex=10%></span>
           			<md-input-container flex=10%>
@@ -85,7 +85,7 @@
           			<span flex=15%></span>
           			<md-input-container flex=10%>
           				<label>Distance 3</label>
-          				<input required id=sp3 ng-model=sagCtrl.sp3 name=BEl type=number step=0.1 min=0.00>
+          				<input required id=sp3 ng-model=sagCtrl.sp3 name=sp3 type=number step=0.1 min=0.00>
           				<div ng-messages="sagSpanForm.sp3.$error" role=alert>
             				<div ng-message="required">This is required.</div>
           				</div>
@@ -107,7 +107,7 @@
 
 		<form name=grndElevationForm ng-keyup=sagCtrl.drawDiagram(); novalidate>
 			<fieldset ng-disabled="isDisabledGrndElevationForm">
-  				<div layout=row class=row id=ground>
+  				<div layout=row flex class=row id=ground>
   					
           			<md-input-container flex=10%>
           				<label>Elev. at Pole</label>

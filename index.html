@@ -6,32 +6,83 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/angular-material.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">        
     <link rel="stylesheet" href="css/styles.css">
     <title>GeoTechTools</title>
   </head>
   <body ng-app="utilities" ng-strict-di>
-  
-    <md-content class="md-padding">
-    <div layout="row" flex>
-        <div flex=10></div>
-        <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" flex=80>
+    
+    <md-toolbar layout="row" ng-controller=MenuController>
+
+        <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+          <ng-md-icon icon="menu"></ng-md-icon>
+        </md-button>
+
+        <div flex=10%></div>
+
+        <md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" show-gt-md nav-bar-aria-label="navigation links" flex=80>
             <md-nav-item md-nav-sref="public.home" name=Home>Home</md-nav-item>
             <md-nav-item md-nav-sref="public.sag" name=Tools>Tools</md-nav-item>
             <md-nav-item md-nav-sref="public.about" name=About>About</md-nav-item>    
         </md-nav-bar>
-        <div flex=10></div>
-    </div>
-    <div class="ext-content">
-      <main>
-        <div id=message class=alert></div>
-        <ui-view>
-            <div class="text-center initial-loading">
-                <h2>Loading Site...</h2>              
+
+        <div flex=10%></div>
+      <!-- <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Hello World</h1> -->
+    </md-toolbar>
+
+    <md-content class="md-padding">
+
+    <div layout=row flex>
+        <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" flex md-component-id="left" md-is-locked>
+            <md-toolbar class="md-tall md-hue-2">
+                <span flex></span>
+                <div layout="column" class="md-toolbar-tools-bottom inset">
+                    <user-avatar></user-avatar>
+                    <span></span>
+                    <div>SOME TEXT 1</div>
+                    <div>SOME TEXT 2</div>
+                </div>
+            </md-toolbar>
+      <!--       <md-list>
+                <md-item ng-repeat="item in menu">
+                    <a>
+                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                            <div class="inset">
+                                <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                            </div>
+                            <div class="inset">{{item.title}}</div>
+                        </md-item-content>
+                    </a>
+                </md-item>
+                <md-divider></md-divider>
+                <md-subheader>TEXT 3</md-subheader>
+                <md-item ng-repeat="item in admin">
+                    <a>
+                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                            <div class="inset">
+                                <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                            </div>
+                            <div class="inset">{{item.title}}</div>
+                        </md-item-content>
+                    </a>
+                </md-item>
+            </md-list> -->
+        </md-sidenav>
+
+        <div class="ext-content md-whiteframe-z2" layout=row layout-align-gt-sm="center" flex>
+          <main>
+            <div id=message class=alert></div>
+            <ui-view>
+                <div class="text-center initial-loading">
+                    <h2>Loading Site...</h2>              
+                </div>
+            </ui-view>
             </div>
-        </ui-view>
+          </main>
         </div>
-      </main>
-  </md-content>
+      </md-content>
+      
+
     <footer>
         <md-toolbar class="md-scroll-shrink">
             <div layout="row" layout-align="center center" flex>
@@ -65,11 +116,12 @@
 
     <!-- Public Module -->
     <script src="js/public/public.module.js"></script>
+    <script src="js/public/public.controller.js"></script>
     <script src="js/public/routes.js"></script>
     <script src="js/public/sag/sag.controller.js"></script>
     
     <script src="js/public/sag/chainage.filter.js"></script>
     
-
+    <script src="//cdn.jsdelivr.net/angular-material-icons/0.4.0/angular-material-icons.min.js"></script>
   </body>
 </html>
