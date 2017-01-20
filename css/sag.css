@@ -44,6 +44,15 @@ md-sidenav {
   }
 }
 
+.md-button.md-small {
+    min-width: 1%;
+    min-height: 1em;
+    height: 1.5em;
+
+    padding: 0;
+    margin: 0;
+}
+
 /*** overwrite angular material ***/
 table md-input-container div.md-errors-spacer{
 	display:none;
@@ -61,4 +70,8 @@ md-input-container {
 
 md-input-container input{
 	text-transform: uppercase;
+}
+
+md-button ng-md-icon {
+	overflow: visible;
 }

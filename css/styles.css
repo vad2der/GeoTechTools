@@ -36,7 +36,26 @@ ul {
   margin: 0 2em 0 2em; 
 }
 
-
 main {
-  min-height: calc(100vh - 144px);
+  min-height: calc(100vh - 160px);
+  min-width: 550px;
+}
+
+.frameContainer md-whiteframe, md-card {
+  margin: 1em;
+  padding: 1em;
+}
+
+md-sidenav md-content ul li.parent-list-item ul li a, md-sidenav md-content ul li.parent-list-item a {
+  width: 100%;
+  text-align: left;
+}
+
+md-card:hover{
+  cursor: pointer;
+}
+
+#message{
+  min-width: 0;
+  min-height: 0;
 }

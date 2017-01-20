@@ -35,9 +35,20 @@ function SagController($scope) {
 	let polesFunction;
 	let lineAsIsFunction;
 	let svgAuxillary;
+	let lineId = 1;
 
 	var wire;
 	var ground;
+
+	sagCtrl.deleteEntry = function(entryIndex){
+		if(sagCtrl.tableContent[entryIndex].lineId.toString() == 1){
+			color = 'red';
+		}
+		let l = '#line-id-'+sagCtrl.tableContent[entryIndex].lineId.toString();
+		console.log(l);
+		d3.selectAll(l).remove();
+		sagCtrl.tableContent.splice(entryIndex, 1);
+	}
 
   	sagCtrl.loadTestData = function(){
 		//test data --start
@@ -97,6 +108,7 @@ function SagController($scope) {
 		crossingType = "dl-crossing";
 		color = "red";
 		sagCtrl.stage = 0;
+		lineId = 1;
 	}
   
   	sagCtrl.drawDiagram = function(){
@@ -171,7 +183,7 @@ function SagController($scope) {
 	    			.y(d => height-2*margin-(d.y-Math.min.apply(null, ground))*yScaleFactor)
 	    			.interpolate("linear");
 
-	    const poleA = [{"x": 0, "y": parseFloat(sagCtrl.AGr)}, {"x": 0, "y": parseFloat(sagCtrl.AEl)}];
+	    const poleA = [{"x": 0.0, "y": parseFloat(sagCtrl.AGr)}, {"x": 0.0, "y": parseFloat(sagCtrl.AEl)}];
 	    const poleB = [{"x": parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4), "y": parseFloat(sagCtrl.BGr)},
 	    			   {"x": parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4), "y": parseFloat(sagCtrl.BEl)}];
 
@@ -453,7 +465,7 @@ function SagController($scope) {
 		let textCoord = {"x": wireCoord.attr('cx'),
 						 "y": (parseFloat(groundCoord.attr('cy'))+parseFloat(wireCoord.attr('cy')))/2};
 		let textVal = parseFloat((groundCoord.attr('cy') - wireCoord.attr('cy'))/yScaleFactor).toFixed(2);
-			
+		
 		svgAuxillary.append("g")
 					.attr('class', crossingType)
 					.append("path")
@@ -462,7 +474,8 @@ function SagController($scope) {
                     .attr("stroke-width", 1)
                     .attr("stroke-dasharray", ("10,3"))
                     .attr("fill", "none")
-    				.attr('class', crossingType);
+    				.attr('class', crossingType)
+    				.attr('id', function(){return "line-id-" + lineId.toString();});
 
 		d3.selectAll("g.aux-line").append("text")
 			.attr("x", textCoord.x)
@@ -473,8 +486,9 @@ function SagController($scope) {
 			.attr("font-family", "Arial Black")
 		    .attr("font-size", "1em")
 		    .attr("fill", color)
-		    .attr("transform", "rotate(-90 "+textCoord.x+", "+textCoord.y+")");
-
+		    .attr("transform", "rotate(-90 "+textCoord.x+", "+textCoord.y+")")
+		    .attr('id', function(){return "line-id-" + lineId.toString();});
+		
 		let name;
 		if(crossingType == "dl-crossing"){
 			name = "CROSSING";
@@ -487,8 +501,9 @@ function SagController($scope) {
 		updateTable({"chain": (parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2) - sagCtrl.zero).toFixed(2),
 					 "groundElevation": parseFloat((height - 2*margin - groundCoord.attr('cy'))/yScaleFactor + Math.min.apply(null, ground)).toFixed(2),
 					 "wireElevation": parseFloat((height - 2*margin - wireCoord.attr('cy'))/yScaleFactor + Math.min.apply(null, ground)).toFixed(2),
-					 "name": name});
+					 "name": name, "lineId": lineId});
 
+		lineId += 1;
 		color = "blue";
 		crossingType = "aux-crossing";
 		$scope.$digest();			

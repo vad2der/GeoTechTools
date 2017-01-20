@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <base href="/">
     <!-- Styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -20,9 +21,8 @@
 
         <div flex=10%></div>
 
-        <md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" show-gt-md nav-bar-aria-label="navigation links" flex=80>
-            <md-nav-item md-nav-sref="public.home" name=Home>Home</md-nav-item>
-            <md-nav-item md-nav-sref="public.sag" name=Tools>Tools</md-nav-item>
+        <md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" show-gt-md nav-bar-aria-label="navigation links" flex=80>            
+            <md-nav-item md-nav-sref="public.tools" name=Tools>Tools</md-nav-item>
             <md-nav-item md-nav-sref="public.about" name=About>About</md-nav-item>    
         </md-nav-bar>
 
@@ -33,40 +33,33 @@
     <md-content class="md-padding">
 
     <div layout=row flex>
+        
         <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" flex md-component-id="left" md-is-locked>
-            <md-toolbar class="md-tall md-hue-2">
-                <span flex></span>
-                <div layout="column" class="md-toolbar-tools-bottom inset">
-                    <user-avatar></user-avatar>
-                    <span></span>
-                    <div>SOME TEXT 1</div>
-                    <div>SOME TEXT 2</div>
+            
+            <md-toolbar md-scroll-shrink>
+                <div class="md-toolbar-tools">
+                  <h3>
+                    <span>Menu</span>
+                  </h3>
                 </div>
             </md-toolbar>
-      <!--       <md-list>
-                <md-item ng-repeat="item in menu">
-                    <a>
-                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                            <div class="inset">
-                                <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
-                            </div>
-                            <div class="inset">{{item.title}}</div>
-                        </md-item-content>
-                    </a>
-                </md-item>
-                <md-divider></md-divider>
-                <md-subheader>TEXT 3</md-subheader>
-                <md-item ng-repeat="item in admin">
-                    <a>
-                        <md-item-content md-ink-ripple layout="row" layout-align="start center">
-                            <div class="inset">
-                                <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
-                            </div>
-                            <div class="inset">{{item.title}}</div>
-                        </md-item-content>
-                    </a>
-                </md-item>
-            </md-list> -->
+            
+            <md-content flex role="navigation">
+                <ul class="side-menu">
+                  <li class="parent-list-item">
+                    <md-button ui-sref="public.tools" flex=100%>Tools</md-button>                    
+                        <ul>
+                            <li><md-button ui-sref="public.sag" flex=100%>Sag Model</md-button></li>
+                            <li><md-button ui-sref="public.points" flex=100% disabled>Points Adjustment</md-button></li>
+                        </ul>
+                  </li>
+                  <li>
+                    <md-button ui-sref="public.about" flex=100%>About</md-button>                    
+                  </li>
+                </ul>
+
+            </md-content>>
+
         </md-sidenav>
 
         <div class="ext-content md-whiteframe-z2" layout=row layout-align-gt-sm="center" flex>
@@ -85,10 +78,12 @@
 
     <footer>
         <md-toolbar class="md-scroll-shrink">
-            <div layout="row" layout-align="center center" flex>
+            <div layout=row layout-align="center center" flex>
+                <div flex=10></div>
                 <div flex=80>
-                    <span>Footer text</span>
+                    <span>&copy; Two Against The Odds, 2017</span>
                 </div>
+                <div flex=10></div>
             </div>
         </md-toolbar>
     </footer>

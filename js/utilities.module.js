@@ -7,10 +7,11 @@ angular.module('utilities', ['public', 'ngMdIcons'])
   this.currentNavItem = "Home";
 });
 
-config.$inject = ['$urlRouterProvider'];
-function config($urlRouterProvider) {
-
-  // If user goes to a path that doesn't exist, redirect to public root
-  $urlRouterProvider.otherwise('/');
+config.$inject = ['$urlRouterProvider', '$locationProvider'];
+function config($urlRouterProvider, $locationProvider) {
+	//getting rid of # in route
+	$locationProvider.html5Mode(true);
+  	// If user goes to a path that doesn't exist, redirect to public root
+  	$urlRouterProvider.otherwise('/tools');
 }	
 })();
