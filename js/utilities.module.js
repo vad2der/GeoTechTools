@@ -10,7 +10,7 @@ angular.module('utilities', ['public', 'ngMdIcons'])
 config.$inject = ['$urlRouterProvider', '$locationProvider'];
 function config($urlRouterProvider, $locationProvider) {
 	//getting rid of # in route
-	$locationProvider.html5Mode(true);
+//	$locationProvider.html5Mode(true);
   	// If user goes to a path that doesn't exist, redirect to public root
   	$urlRouterProvider.otherwise('/tools');
 }	

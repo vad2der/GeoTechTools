@@ -13,7 +13,7 @@ function config($mdThemingProvider, $urlRouterProvider, $locationProvider) {
     .accentPalette('light-blue');
 
     	//getting rid of # in route
-	$locationProvider.html5Mode(true);
+//	$locationProvider.html5Mode(true);
   	// If user goes to a path that doesn't exist, redirect to public root
   	$urlRouterProvider.otherwise('/tools');
 }	
