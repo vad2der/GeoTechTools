@@ -45,7 +45,7 @@ function SagController($scope) {
 			color = 'red';
 		}
 		let l = '#line-id-'+sagCtrl.tableContent[entryIndex].lineId.toString();
-		console.log(l);
+		
 		d3.selectAll(l).remove();
 		sagCtrl.tableContent.splice(entryIndex, 1);
 	}
