@@ -15,12 +15,12 @@ function routeConfig ($stateProvider) {
       absract: true,
       templateUrl: 'templates/public/public.html'
     })      
-    .state('public.home', {
-      url: '/',
-      templateUrl: 'templates/public/tools.html'
-    })
+    // .state('public.home', {
+    //   url: '/',
+    //   templateUrl: 'templates/public/tools.html'
+    // })
      .state('public.tools', {
-      url: '/tools',
+      url: '/',
       templateUrl: 'templates/public/tools.html'
     })
     .state('public.sag', {
@@ -33,10 +33,9 @@ function routeConfig ($stateProvider) {
       url: '/about',
       templateUrl: 'templates/public/about.html'
     })
-    
     .state("otherwise", {
       url: "*path",
-      templateUrl: "templates/error-not-found.html"
+      templateUrl: "templates/public/error-not-found.html"
     });
 }
 
