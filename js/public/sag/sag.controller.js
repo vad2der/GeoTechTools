@@ -43,6 +43,7 @@ function SagController($scope) {
 	sagCtrl.deleteEntry = function(entryIndex){
 		if(sagCtrl.tableContent[entryIndex].lineId.toString() == 1){
 			color = 'red';
+			crossingType = "dl-crossing";
 		}
 		let l = '#line-id-'+sagCtrl.tableContent[entryIndex].lineId.toString();
 		
@@ -52,22 +53,22 @@ function SagController($scope) {
 
   	sagCtrl.loadTestData = function(){
 		//test data --start
-		sagCtrl.AEl = 704.207;
-		sagCtrl.AQuatEl = 696.876;
-		sagCtrl.Midel = 695.429;
-		sagCtrl.BQuatEl = 697.765;
-		sagCtrl.BEl = 705.935;
+		sagCtrl.AEl = 1042.46;
+		sagCtrl.AQuatEl = 1025.96;
+		sagCtrl.Midel = 1013.63;
+		sagCtrl.BQuatEl = 1005.23;
+		sagCtrl.BEl = 1001.31;
 
-		sagCtrl.AGr = 690.107;
-		sagCtrl.AQuatGr = 685.476;
-		sagCtrl.Midgr = 685.169;
-		sagCtrl.BQuatGr = 687.575;
-		sagCtrl.BGr = 692.325;
+		sagCtrl.AGr = 1021.71;
+		sagCtrl.AQuatGr = 1008.73;
+		sagCtrl.Midgr = 1002.65;
+		sagCtrl.BQuatGr = 993.65;
+		sagCtrl.BGr = 986.34;
 
-		sagCtrl.sp1 = 87.92;
-		sagCtrl.sp2 = 73.81;
-		sagCtrl.sp3 = 61.78;
-		sagCtrl.sp4 = 82.50;
+		sagCtrl.sp1 = 64.4;
+		sagCtrl.sp2 = 73.6;
+		sagCtrl.sp3 = 64.3;
+		sagCtrl.sp4 = 64.1;
 		//test data --end
 		color = "red";
 
@@ -183,7 +184,8 @@ function SagController($scope) {
 	    			.y(d => height-2*margin-(d.y-Math.min.apply(null, ground))*yScaleFactor)
 	    			.interpolate("linear");
 
-	    const poleA = [{"x": 0.0, "y": parseFloat(sagCtrl.AGr)}, {"x": 0.0, "y": parseFloat(sagCtrl.AEl)}];
+	    const poleA = [{"x": 0.0, "y": parseFloat(sagCtrl.AGr)},
+	    			   {"x": 0.0, "y": parseFloat(sagCtrl.AEl)}];
 	    const poleB = [{"x": parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4), "y": parseFloat(sagCtrl.BGr)},
 	    			   {"x": parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4), "y": parseFloat(sagCtrl.BEl)}];
 
@@ -206,7 +208,8 @@ function SagController($scope) {
 	    						.attr('class','pole');
 
 		let poleAcx = 0;
-	    let poleAcy = height-2*margin-((poleA[1].y-poleA[0].y)/2)*yScaleFactor;
+		console.log(d3.select('g.poleA').select('path.pole'));
+	    let poleAcy = height-2*margin-((poleA[1].y+poleA[0].y)/2)*yScaleFactor;
 	    let poleAdy = parseFloat(poleA[1].y-poleA[0].y).toFixed(2);
 
 		d3.selectAll("g.poleA").append("text")
