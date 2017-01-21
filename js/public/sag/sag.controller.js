@@ -209,7 +209,7 @@ function SagController($scope) {
 
 		let poleAcx = 0;
 		console.log(d3.select('g.poleA').select('path.pole'));
-	    let poleAcy = height-2*margin-((poleA[1].y+poleA[0].y)/2)*yScaleFactor;
+	    let poleAcy = height-2*margin-((poleA[1].y-poleA[0].y)/2)*yScaleFactor;
 	    let poleAdy = parseFloat(poleA[1].y-poleA[0].y).toFixed(2);
 
 		d3.selectAll("g.poleA").append("text")
