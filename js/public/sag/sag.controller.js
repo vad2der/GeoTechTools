@@ -49,6 +49,7 @@ function SagController($scope) {
 		
 		d3.selectAll(l).remove();
 		sagCtrl.tableContent.splice(entryIndex, 1);
+		lineId = 1;
 	}
 
   	sagCtrl.loadTestData = function(){
@@ -497,7 +498,7 @@ function SagController($scope) {
 			name = "CROSSING";
 			sagCtrl.zero = parseFloat(groundCoord.attr('cx')/xScaleFactor).toFixed(2);
 			sagCtrl.tableContent.forEach(function(entry){
-				entry.chain = (entry.chain.toFixed(2) - parseFloat(sagCtrl.zero).toFixed(2)).toFixed(2);
+				entry.chain = (parseFloat(entry.chain).toFixed(2) - parseFloat(sagCtrl.zero).toFixed(2)).toFixed(2);
 			})
 		}else{name = "";}
 
