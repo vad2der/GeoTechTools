@@ -35,7 +35,7 @@ function routeConfig ($stateProvider) {
     })
     .state("otherwise", {
       url: "*path",
-      templateUrl: "templates/public/error-not-found.html"
+      templateUrl: 'templates/public/tools.html'//"templates/public/error-not-found.html"
     });
 }
 

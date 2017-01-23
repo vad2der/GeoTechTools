@@ -46,9 +46,10 @@ main {
   padding: 1em;
 }
 
-md-sidenav md-content ul li.parent-list-item ul li a, md-sidenav md-content ul li.parent-list-item a {
+md-sidenav a, md-sidenav a span {
   width: 100%;
   text-align: left;
+  float: left;
 }
 
 md-card:hover{
