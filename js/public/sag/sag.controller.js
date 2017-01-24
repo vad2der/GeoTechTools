@@ -24,12 +24,12 @@ function SagController($scope) {
 	let measurement1, measurement2, measurementX;
 	let leftMeasurement, rightMeasurement, xMeasurement;
 
-	const width = 1200;//document.getElementById("canvas").clientWidth;
-  	const height = 400;//document.getElementById("canvas").clientHeight;
+	let width = document.getElementById("canvas").clientWidth;
+  	let height = width/3;
    	
     let svgRawContainer;
 	let svgContainer;
-	const margin = 0.01*height;
+	const margin = 0.005*width;
   	let yScaleFactor;
 	let xScaleFactor;
 	let polesFunction;
@@ -39,6 +39,7 @@ function SagController($scope) {
 
 	var wire;
 	var ground;
+	let yd;
 
 	sagCtrl.deleteEntry = function(entryIndex){
 		if(sagCtrl.tableContent[entryIndex].lineId.toString() == 1){
@@ -112,16 +113,18 @@ function SagController($scope) {
 		sagCtrl.stage = 0;
 		lineId = 1;
 	}
-  
-  	sagCtrl.drawDiagram = function(){
+
+  	sagCtrl.drawDiagram = function(){  		
 
 	  	if (!$scope.sagElevationForm.$valid || !$scope.sagSpanForm.$valid || !$scope.grndElevationForm.$valid){return};
 	  	sagCtrl.stage = 2;
 	  	wire = [parseFloat(sagCtrl.AEl), parseFloat(sagCtrl.AQuatEl), parseFloat(sagCtrl.Midel), parseFloat(sagCtrl.BQuatEl), parseFloat(sagCtrl.BEl)];
 	  	ground = [parseFloat(sagCtrl.AGr), parseFloat(sagCtrl.AQuatGr), parseFloat(sagCtrl.Midgr), parseFloat(sagCtrl.BQuatGr), parseFloat(sagCtrl.BGr)];
-	  	const yd = (Math.max.apply(null, wire) - Math.min.apply(null, ground));
-	  	yScaleFactor = (height - 2*margin)/yd; //units in height pixels  	
-	  	xScaleFactor = (width - 2*margin)/(parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4));
+	  	yd = (Math.max.apply(null, wire) - Math.min.apply(null, ground));
+	  	yScaleFactor = getYScale();
+	  	xScaleFactor =  getXScale();
+	  	// console.log(width, height);
+	  	// console.log(xScaleFactor, yScaleFactor);
 
 	  	sagCtrl.tableContent = [{"chain": 0, "groundElevation": parseFloat(sagCtrl.AGr) , "wireElevation": parseFloat(sagCtrl.AEl), "name": "POLE A"},
 						{"chain": parseFloat(sagCtrl.sp1), "groundElevation": parseFloat(sagCtrl.AQuatGr) , "wireElevation": parseFloat(sagCtrl.AQuatEl), "name": "1/4 SPAN"},
@@ -151,7 +154,7 @@ function SagController($scope) {
 		svgRawContainer = d3.select("#canvas").append("svg")
 	    	.attr("width", width)
 	    	.attr("height", height)
-	    	.attr('class','svg-cont')
+	    	.attr('class','svg-cont');
 	    	
 		svgContainer = svgRawContainer
 	  			.append("g")
@@ -209,8 +212,8 @@ function SagController($scope) {
 	    						.attr('class','pole');
 
 		let poleAcx = 0;
-		console.log(d3.select('g.poleA').select('path.pole'));
-	    let poleAcy = height-2*margin-((poleA[1].y-poleA[0].y)/2)*yScaleFactor;
+		//console.log(d3.select('g.poleA').select('path.pole'));
+	    let poleAcy = height/2 ;//height-2*margin-((poleA[1].y-poleA[0].y)/2)*yScaleFactor;
 	    let poleAdy = parseFloat(poleA[1].y-poleA[0].y).toFixed(2);
 
 		d3.selectAll("g.poleA").append("text")
@@ -225,7 +228,7 @@ function SagController($scope) {
 	        .attr("transform", "rotate(-90 "+poleAcx+", "+poleAcy+")");
 
 	    let poleBcx = (parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4))*xScaleFactor;
-	    let poleBcy = height-2*margin-((poleB[1].y-poleB[0].y)/2)*yScaleFactor;
+	    let poleBcy = height/2;//height-2*margin-((poleB[1].y-poleB[0].y)/2)*yScaleFactor;
 	    let poleBdy = parseFloat(poleB[1].y-poleB[0].y).toFixed(2);
 
 		d3.selectAll("g.poleB").append("text")
@@ -312,6 +315,14 @@ function SagController($scope) {
     	.on("mousemove", handleMouseMove)    	
     	.on("click", handleClick);
    	}
+
+	function getXScale(){		
+		return (width - 2*margin)/(parseFloat(sagCtrl.sp1)+parseFloat(sagCtrl.sp2)+parseFloat(sagCtrl.sp3)+parseFloat(sagCtrl.sp4));
+	}
+
+	function getYScale(){
+		return (height - 2*margin)/yd; //units in height pixels  	
+	}
 
 	function handleMouseMove(d, i){     	
         coordinates = d3.mouse(this);

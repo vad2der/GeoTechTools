@@ -1,6 +1,6 @@
 #canvas{
-	width: 1200px;
-	height: 400px;
+	width: 100%;
+	
 	border-style: solid;
   	border-width: 1px;
   	box-sizing: content-box;
@@ -75,3 +75,4 @@ md-input-container input{
 md-button ng-md-icon {
 	overflow: visible;
 }
+
