@@ -151,6 +151,11 @@ function SagController($scope) {
 	    					.y(d => height - 2*margin - (d.y - Math.min.apply(null, ground))*yScaleFactor)
 	    					.interpolate("monotone");
 
+	    let lineFunctionLinear = d3.svg.line()
+	    					.x(d => d.x*xScaleFactor)
+	    					.y(d => height - 2*margin - (d.y - Math.min.apply(null, ground))*yScaleFactor)
+	    					.interpolate("linear");
+
 		svgRawContainer = d3.select("#canvas").append("svg")
 	    	.attr("width", width)
 	    	.attr("height", height)
@@ -169,7 +174,7 @@ function SagController($scope) {
 	    						.attr('class','wire');
 
 		let groundLineGraph = svgContainer.append("path")
-	                            .attr("d", lineFunction(groundPoints))
+	                            .attr("d", lineFunctionLinear(groundPoints))
 	                            .attr("stroke", "green")
 	                            .attr("stroke-width", 2)
 	                            .attr("fill", "none")
