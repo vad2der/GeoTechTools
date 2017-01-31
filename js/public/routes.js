@@ -25,9 +25,7 @@ function routeConfig ($stateProvider) {
     })
     .state('public.sag', {
       url: '/tools/sag',
-      templateUrl: 'templates/public/sag/sag.html'//,
-      // controller: 'SagController',
-      // controllerAs: 'sagCtrl'      
+      templateUrl: 'templates/public/sag/sag-component.html'
     })
     .state('public.about', {
       url: '/about',

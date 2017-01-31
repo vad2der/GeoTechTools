@@ -6,8 +6,8 @@ angular.module('Spinner', []);
 angular.module('Spinner')
 .config(function () {
   console.log("Spinner config fired.");
-}).
-run(function () {
+})
+.run(function () {
   console.log("Spinner run fired.");
 });
 

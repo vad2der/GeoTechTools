@@ -15,10 +15,10 @@ function SpinnerController($rootScope) {
 
   $ctrl.$onInit = function () {
     var cancel = $rootScope.$on('$stateChangeStart',
-    function(event, toState, toParams, fromState, fromParams, options){
-      $ctrl.showSpinner = true;
-    });
-    cancellers.push(cancel);
+      function(event, toState, toParams, fromState, fromParams, options){
+        $ctrl.showSpinner = true;
+      });
+    //cancellers.push(cancel);
 
     cancel = $rootScope.$on('$stateChangeSuccess',
     function(event, toState, toParams, fromState, fromParams){
