@@ -4,6 +4,9 @@ body {
   background-color: white;
   font-family: 'Oxygen', sans-serif;
 }
+
+#browserWarning { display:none; }
+
 h1{
   text-align: center;
 }

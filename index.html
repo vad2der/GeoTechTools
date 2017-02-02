@@ -11,31 +11,60 @@
     <link rel="stylesheet" href="css/angular-material.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">        
     <link rel="stylesheet" href="css/styles.css">
+<!--[if IE 6]>
+<style type="text/css">
+#browserWarning { display:; }
+</style>
+<![endif]-->
+
     <title>GeoTechTools</title>
   </head>
   <body ng-app="utilities" ng-strict-di>
     
-    <md-toolbar layout="row" ng-controller=MenuController>
+<div id=browserWarning layout="row">
 
-        <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+    <md-card md-theme="default" md-theme-watch flex-sm="80%" flex-gt-sm="60%" flex-gt-md="35%" md-whiteframe=3 ui-sref="public.sag" layout>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">503</span>
+            <span class="md-subhead">IE browser family not supported</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-md card-media"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">          
+        </md-card-actions>
+    </md-card>
+
+ </div>
+
+    <md-toolbar layout="row" ng-controller="MenuController as mc" flex ng-cloak>
+
+        <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu" flex=10>
           <ng-md-icon icon="menu"></ng-md-icon>
         </md-button>
 
-        <div flex=10%></div>
+        <div flex=10% hide-md hide-sm hide-xs show-gt-md></div>
 
         <md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" hide-md hide-sm hide-xs show-gt-md nav-bar-aria-label="navigation links" flex=80>            
             <md-nav-item md-nav-sref="public.tools" name=Tools>Tools</md-nav-item>
             <md-nav-item md-nav-sref="public.about" name=About>About</md-nav-item>    
         </md-nav-bar>
 
-        <div flex=10%></div>
-      <!-- <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Hello World</h1> -->
+        <!-- <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" flex=5% aria-label="User"> -->
+        <md-button ng-click="toggleSidenav('right')" flex=5 aria-label="User">
+            <ng-md-icon icon="perm_identity"></ng-md-icon>
+        </md-button>
+
+        <div flex=5></div>
+      
     </md-toolbar>
 
     <md-content class="md-padding">
 
     <div layout=row flex>
-        
+<!-- LEFT SIDENAV -->        
         <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" flex md-component-id="left" md-is-locked>
             
             <md-toolbar md-scroll-shrink>
@@ -75,6 +104,36 @@
             </ui-view>
           </main>
         </div>
+<!-- RIGHT SIDENAV -->
+        <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+
+            <md-toolbar class="md-theme-light">
+                <h1 ng-if=mc.loggedin class="md-toolbar-tools">mc.fullName</h1>
+                <h1 ng-if=!mc.loggedin class="md-toolbar-tools">Anonimus User</h1>
+            </md-toolbar>
+            <md-content layout-padding>
+                <form ng-if=!mc.loggedin>
+                    <md-input-container>
+                        <label for="testInput">username</label>
+                        <input type="text" id="testInput"
+                            ng-model="data" md-autofocus>
+                    </md-input-container>
+                    <md-input-container>
+                        <label for="testInput">password</label>
+                        <input type="text" id="testInput"
+                            ng-model="data" md-autofocus>
+                    </md-input-container>
+                    <md-button class="md-raised" ng-click=mc.signIn();>Sign In</md-button>
+                    <md-button class="md-raised" ng-click=mc.register();>Register</md-button>
+                </form>
+                <div ng-if=loggedin>
+                <md-button class="md-raised" ng-click=mc.logOut();>Log Out</md-button>
+                <md-button class="md-raised" ng-click=mc.logOut();>Saved Entries</md-button>
+                </div>
+                
+            </md-content>
+        </md-sidenav>
+
       </md-content>
       </div>
 
