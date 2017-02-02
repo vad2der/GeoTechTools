@@ -114,6 +114,24 @@ function SagController($scope) {
 		lineId = 1;
 	}
 
+	sagCtrl.clearCrossings = function(){
+		$scope.isDisabledSagElevationForm = false;
+		$scope.isDisabledSagSpanForm = false;
+		$scope.isDisabledGrndElevationForm = false;
+
+		$scope.sagElevationForm.$setUntouched();
+		$scope.sagSpanForm.$setUntouched();
+		$scope.grndElevationForm.$setUntouched();
+
+		sagCtrl.tableContent = undefined;
+		crossingType = "dl-crossing";
+		color = "red";
+		sagCtrl.stage = 2;
+		lineId = 1;
+		sagCtrl.drawDiagram();
+	}
+
+
   	sagCtrl.drawDiagram = function(){  		
 
 	  	if (!$scope.sagElevationForm.$valid || !$scope.sagSpanForm.$valid || !$scope.grndElevationForm.$valid){return};
@@ -500,6 +518,7 @@ function SagController($scope) {
 		d3.selectAll("g.aux-line").append("text")
 			.attr("x", textCoord.x)
 			.attr("y", textCoord.y)
+			.attr('class', crossingType)
 			.attr("text-anchor", "middle")
 			.attr("alignment-baseline", "after-edge")
 			.text(textVal)

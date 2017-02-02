@@ -5,7 +5,7 @@
   			<span ng-if="sagCtrl.stage == 0">Enter the sag parameters or try <md-button class="md-raised" ng-click=sagCtrl.loadTestData();>Load Test Data</md-button></span>
   			<span ng-if="sagCtrl.stage == 1">You still can  <md-button class="md-raised" ng-click=sagCtrl.loadTestData();>Load Test Data</md-button> or <md-button class="md-raised" ng-click=sagCtrl.clearData();>Clear Data</md-button></span>
   			<span ng-if="sagCtrl.stage == 2">To erase inputs <md-button class="md-raised" ng-click=sagCtrl.clearData();>Clear Data</md-button> or <md-button class="md-raised" ng-click=sagCtrl.secureInput();>Secure Inputs</md-button> to continue on custom crossings</span>
-  			<span ng-if="sagCtrl.stage == 3">Click on the diagram to enter custom crossing lertical or <md-button class="md-raised" ng-click=sagCtrl.clearData();>Clear Data</md-button> to start again</span>
+  			<span ng-if="sagCtrl.stage == 3">Click on the diagram to enter custom crossing vertical or <md-button class="md-raised" ng-click=sagCtrl.clearData();>Clear Data</md-button> to start again or return to model initial inputs <md-button class="md-raised" ng-click=sagCtrl.clearCrossings();>Clear Crossings</md-button></span>
   		</div>
   		<form name=sagElevationForm ng-keyup=sagCtrl.drawDiagram();>
   			<fieldset ng-disabled="isDisabledSagElevationForm">
