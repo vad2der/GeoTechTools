@@ -5,7 +5,13 @@ body {
   font-family: 'Oxygen', sans-serif;
 }
 
-#browserWarning { display:none; }
+#browserWarning { 
+  display:none;
+}
+
+#browserWarning md-card {
+  background-color: orange;
+}
 
 h1{
   text-align: center;
