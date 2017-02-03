@@ -176,7 +176,7 @@
 						</md-input-container>						
   					</td>
   					<td>
-  						<md-button class="md-small" aria-label="Delete te entry" ng-if=row.lineId ng-click=sagCtrl.deleteEntry($index);>
+  						<md-button class="md-small" aria-label="Delete te entry" ng-if="row.lineId > 1" ng-click=sagCtrl.deleteEntry($index);>
   							<!-- <ng-md-icon icon="delete"></ng-md-icon> -->
   							x
   						</md-button>
