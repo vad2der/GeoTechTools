@@ -9,8 +9,12 @@
   		</div>
   		<form name=sagElevationForm ng-keyup=sagCtrl.drawDiagram();>
   			<fieldset ng-disabled="isDisabledSagElevationForm">
-  				<div layout=row flex id=elevation>
+  				
+            <md-switch name=lineType ng-disabled=sagCtrl.linetypeDisabled ng-model="sagCtrl.linetypeBool" aria-label="Linetype Switch">
+              Linetype: {{ sagCtrl.linetype() }}
+            </md-switch>
 
+          <div layout=row flex id=elevation>
   					<md-input-container flex=10%>
           				<label>Elev. at Pole</label>
           				<input required id=Ael ng-model=sagCtrl.AEl name=AEl type=number step=0.1 min=0.00>

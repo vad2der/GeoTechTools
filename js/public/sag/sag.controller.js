@@ -6,8 +6,6 @@ angular.module('public')
 
 SagController.$inject = ['$scope'];
 function SagController($scope) {
-
-
 	var sagCtrl = this;
 	let color = "red";
 	let crossingType = "dl-crossing";  
@@ -40,6 +38,22 @@ function SagController($scope) {
 	var wire;
 	var ground;
 	let yd;
+	sagCtrl.linetypeBool = true;
+	sagCtrl.linetypeDisabled = false;
+	sagCtrl.linetype = function(){
+		if (sagCtrl.linetypeBool == true){
+			return "monotone";
+		} else {
+			return "linear";
+		}
+	};
+	sagCtrl.linetypeSwitchClass = function(){
+		if (sagCtrl.linetypeBool == true){
+			return "md-primary";
+		} else {
+			return "";
+		}
+	}
 
 	sagCtrl.deleteEntry = function(entryIndex){
 		if(sagCtrl.tableContent[entryIndex].lineId.toString() == 1){
@@ -112,6 +126,7 @@ function SagController($scope) {
 		color = "red";
 		sagCtrl.stage = 0;
 		lineId = 1;
+		sagCtrl.linetypeDisabled = false;
 	}
 
 	sagCtrl.clearCrossings = function(){
@@ -136,6 +151,7 @@ function SagController($scope) {
 
 	  	if (!$scope.sagElevationForm.$valid || !$scope.sagSpanForm.$valid || !$scope.grndElevationForm.$valid){return};
 	  	sagCtrl.stage = 2;
+	  	sagCtrl.linetypeDisabled = true;
 	  	wire = [parseFloat(sagCtrl.AEl), parseFloat(sagCtrl.AQuatEl), parseFloat(sagCtrl.Midel), parseFloat(sagCtrl.BQuatEl), parseFloat(sagCtrl.BEl)];
 	  	ground = [parseFloat(sagCtrl.AGr), parseFloat(sagCtrl.AQuatGr), parseFloat(sagCtrl.Midgr), parseFloat(sagCtrl.BQuatGr), parseFloat(sagCtrl.BGr)];
 	  	yd = (Math.max.apply(null, wire) - Math.min.apply(null, ground));
@@ -167,7 +183,7 @@ function SagController($scope) {
 	 	let lineFunction = d3.svg.line()
 	    					.x(d => d.x*xScaleFactor)
 	    					.y(d => height - 2*margin - (d.y - Math.min.apply(null, ground))*yScaleFactor)
-	    					.interpolate("monotone");
+	    					.interpolate(sagCtrl.linetype());
 
 	    let lineFunctionLinear = d3.svg.line()
 	    					.x(d => d.x*xScaleFactor)
