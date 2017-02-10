@@ -20,8 +20,8 @@ function routeConfig ($stateProvider) {
     //   templateUrl: 'templates/public/tools.html'
     // })
      .state('public.tools', {
-      url: '/',
-      templateUrl: 'templates/public/tools.html'
+      url: '/tools',
+      templateUrl: 'templates/public/tools/tools-component.html'
     })
     .state('public.sag', {
       url: '/tools/sag',
@@ -33,7 +33,7 @@ function routeConfig ($stateProvider) {
     })
     .state("otherwise", {
       url: "*path",
-      templateUrl: 'templates/public/tools.html'//"templates/public/error-not-found.html"
+      templateUrl: 'templates/public/tools/tools-component.html'//"templates/public/error-not-found.html"
     });
 }
 

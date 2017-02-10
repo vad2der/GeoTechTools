@@ -46,14 +46,8 @@ function SagController($scope) {
 		} else {
 			return "linear";
 		}
+		sagCtrl.drawDiagram();
 	};
-	sagCtrl.linetypeSwitchClass = function(){
-		if (sagCtrl.linetypeBool == true){
-			return "md-primary";
-		} else {
-			return "";
-		}
-	}
 
 	sagCtrl.deleteEntry = function(entryIndex){
 		if(sagCtrl.tableContent[entryIndex].lineId.toString() == 1){
@@ -143,7 +137,8 @@ function SagController($scope) {
 		color = "red";
 		sagCtrl.stage = 2;
 		lineId = 1;
-		sagCtrl.drawDiagram();
+		sagCtrl.linetypeDisabled = false;
+		sagCtrl.drawDiagram();		
 	}
 
 
@@ -151,7 +146,7 @@ function SagController($scope) {
 
 	  	if (!$scope.sagElevationForm.$valid || !$scope.sagSpanForm.$valid || !$scope.grndElevationForm.$valid){return};
 	  	sagCtrl.stage = 2;
-	  	sagCtrl.linetypeDisabled = true;
+	  	//sagCtrl.linetypeDisabled = true;
 	  	wire = [parseFloat(sagCtrl.AEl), parseFloat(sagCtrl.AQuatEl), parseFloat(sagCtrl.Midel), parseFloat(sagCtrl.BQuatEl), parseFloat(sagCtrl.BEl)];
 	  	ground = [parseFloat(sagCtrl.AGr), parseFloat(sagCtrl.AQuatGr), parseFloat(sagCtrl.Midgr), parseFloat(sagCtrl.BQuatGr), parseFloat(sagCtrl.BGr)];
 	  	yd = (Math.max.apply(null, wire) - Math.min.apply(null, ground));
@@ -342,6 +337,7 @@ function SagController($scope) {
 
     sagCtrl.secureInput = function(){
     	sagCtrl.stage = 3;
+    	sagCtrl.linetypeDisabled = true;
 		$scope.isDisabledSagElevationForm = true;
 	  	$scope.isDisabledSagSpanForm = true;
 	  	$scope.isDisabledGrndElevationForm = true;

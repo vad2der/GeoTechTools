@@ -10,7 +10,7 @@
   		<form name=sagElevationForm ng-keyup=sagCtrl.drawDiagram();>
   			<fieldset ng-disabled="isDisabledSagElevationForm">
   				
-            <md-switch name=lineType ng-disabled=sagCtrl.linetypeDisabled ng-model="sagCtrl.linetypeBool" aria-label="Linetype Switch">
+            <md-switch name=lineType ng-disabled=sagCtrl.linetypeDisabled ng-model="sagCtrl.linetypeBool" aria-label="Linetype Switch" ng-change="sagCtrl.drawDiagram();">
               Linetype: {{ sagCtrl.linetype() }}
             </md-switch>
 

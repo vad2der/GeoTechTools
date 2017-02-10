@@ -40,7 +40,7 @@
     </md-card>
 
  </div>
-
+    <!-- HEADER -->
     <md-toolbar layout="row" ng-controller="MenuController as mc" flex ng-cloak>
 
         <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu" flex=10>
@@ -49,7 +49,7 @@
 
         <div flex=10% hide-md hide-sm hide-xs show-gt-md></div>
 
-        <md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" hide-md hide-sm hide-xs show-gt-md nav-bar-aria-label="navigation links" flex=80>            
+        <md-nav-bar md-selected-nav-item=currentNavItem nav-bar-aria-label="navigation links" hide-md hide-sm hide-xs show-gt-md flex=80>
             <md-nav-item md-nav-sref="public.tools" name=Tools>Tools</md-nav-item>
             <md-nav-item md-nav-sref="public.about" name=About>About</md-nav-item>    
         </md-nav-bar>
@@ -100,6 +100,9 @@
             <ui-view>
                 <div class="text-center initial-loading">
                     <h2>Loading Site...</h2>
+                    <div layout="row" layout-sm="column" layout-align="space-around">
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
                     <loading-spinner></loading-spinner>            
                 </div>
             </ui-view>
@@ -175,6 +178,8 @@
     <!-- Public Module -->
     <script src="js/public/public.module.js"></script>
     <script src="js/public/public.controller.js"></script>
+    <script src="js/public/tools/tools.component.js"></script>
+    <script src="js/public/tools/tools.controller.js"></script>
     <script src="js/public/sag/sag.component.js"></script>
     <script src="js/public/sag/sag.controller.js"></script>
     <script src="js/spinner/spinner.module.js"></script>

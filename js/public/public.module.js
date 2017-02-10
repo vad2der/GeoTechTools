@@ -3,7 +3,7 @@
 /**
  * Public application. Includes the ui-router.
  */
-angular.module('public', ['ui.router', 'ngMaterial', 'ngMessages', 'Spinner'])
+angular.module('public', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimate', 'ngAria', 'Spinner'])
 .config(config);
 
 config.$inject = ['$mdThemingProvider','$urlRouterProvider', '$locationProvider'];
@@ -15,7 +15,8 @@ function config($mdThemingProvider, $urlRouterProvider, $locationProvider) {
     	//getting rid of # in route
 	// $locationProvider.html5Mode(true);
   	// If user goes to a path that doesn't exist, redirect to public root
-  	$urlRouterProvider.otherwise('/#/');
+  	
+  	$urlRouterProvider.otherwise('/#/tools');
 }	
 
 /**
