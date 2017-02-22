@@ -15,11 +15,7 @@ function routeConfig ($stateProvider) {
       absract: true,
       templateUrl: 'templates/public/public.html'
     })      
-    // .state('public.home', {
-    //   url: '/',
-    //   templateUrl: 'templates/public/tools.html'
-    // })
-     .state('public.tools', {
+    .state('public.tools', {
       url: '/tools',
       templateUrl: 'templates/public/tools/tools-component.html'
     })
@@ -30,6 +26,10 @@ function routeConfig ($stateProvider) {
     .state('public.about', {
       url: '/about',
       templateUrl: 'templates/public/about.html'
+    })
+    .state('public.register', {
+      url: '/register',
+      templateUrl: 'templates/public/register.html'
     })
     .state("otherwise", {
       url: "*path",

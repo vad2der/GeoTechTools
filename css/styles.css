@@ -47,7 +47,7 @@ ul {
 
 main {
   min-height: calc(100vh - 160px);
-  min-width: 550px;
+  width: 100vw;
 }
 
 .frameContainer md-whiteframe, md-card {

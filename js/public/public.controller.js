@@ -2,7 +2,8 @@
 "use strict";
 
 angular.module('public')
-.controller('MenuController', MenuController);
+.controller('MenuController', MenuController)
+.controller('UserRegistrationsCtrl', UserRegistrationsCtrl);
 
 MenuController.$inject = ['$scope', '$timeout', '$mdSidenav'];
 function MenuController($scope, $timeout, $mdSidenav) {
@@ -71,6 +72,23 @@ function MenuController($scope, $timeout, $mdSidenav) {
           });
       };
     }
+};
+
+UserRegistrationsCtrl.$inject = ['$scope', '$location', '$auth'];
+function UserRegistrationsCtrl($scope, $location, $auth) {
+  $scope.handleRegBtnClick = function() {
+    $auth.submitRegistration($scope.registrationForm)
+      .then(function() { 
+        $auth.submitLogin({
+          email: $scope.registrationForm.email,
+          password: $scope.registrationForm.password
+        });
+      });
+  };
+  
+  $scope.$on('auth:registration-email-error', function(ev, reason) {
+    $scope.error = reason.errors[0];
+  });
 };
 
 })(window);

@@ -62,7 +62,7 @@
       
     </md-toolbar>
 
-    <md-content class="md-padding">
+<!--     <md-content class="md-padding"> -->
 
     <div layout=row flex>
 <!-- LEFT SIDENAV -->        
@@ -94,7 +94,7 @@
 
         </md-sidenav>
 
-        <div class="ext-content md-whiteframe-z2" layout=row layout-align-gt-sm="center" flex>
+        <div class="ext-content md-whiteframe-z3" layout=row layout-align-gt-sm="center" flex=100>
           <main>
             <div id=message class=alert></div>
             <ui-view>
@@ -110,35 +110,10 @@
         </div>
 <!-- RIGHT SIDENAV -->
         <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
-
-            <md-toolbar class="md-theme-light">
-                <h1 ng-if=mc.loggedin class="md-toolbar-tools">mc.fullName</h1>
-                <h1 ng-if=!mc.loggedin class="md-toolbar-tools">Anonimus User</h1>
-            </md-toolbar>
-            <md-content layout-padding>
-                <form ng-if=!mc.loggedin>
-                    <md-input-container>
-                        <label for="testInput">username</label>
-                        <input type="text" id="testInput"
-                            ng-model="data" md-autofocus>
-                    </md-input-container>
-                    <md-input-container>
-                        <label for="testInput">password</label>
-                        <input type="text" id="testInput"
-                            ng-model="data" md-autofocus>
-                    </md-input-container>
-                    <md-button class="md-raised" ng-click=mc.signIn();>Sign In</md-button>
-                    <md-button class="md-raised" ng-click=mc.register();>Register</md-button>
-                </form>
-                <div ng-if=loggedin>
-                <md-button class="md-raised" ng-click=mc.logOut();>Log Out</md-button>
-                <md-button class="md-raised" ng-click=mc.logOut();>Saved Entries</md-button>
-                </div>
-                
-            </md-content>
+            <user-component>
+            </user-component>
         </md-sidenav>
-
-      </md-content>
+      <!-- </md-content> -->
       </div>
 
     <footer>
@@ -162,15 +137,16 @@
     <script src="lib/angular-ui-router.min.js"></script>    
     <script src="lib/d3.v3.min.js" charset="utf-8"></script>
     <script src="lib/2D.js"></script>
-
+    <script src="bower_components/angular-cookie/angular-cookie.js"></script>
+    <script src="bower_components/ng-token-auth/dist/ng-token-auth.min.js"></script>
       <!-- Angular Material requires Angular.js Libraries -->
     <script src="lib/angular-animate.min.js"></script>
     <script src="lib/angular-aria.min.js"></script>
 <!--    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>-->
       <script src="lib/angular-messages.js"></script>
-
     <!-- Angular Material Library -->
     <script src="lib/angular-material.min.js"></script>
+    <script src="lib/angular-material-icons.min.js"></script>
 
     <!-- Main Module -->
     <script src="js/utilities.module.js"></script>
@@ -178,15 +154,20 @@
     <!-- Public Module -->
     <script src="js/public/public.module.js"></script>
     <script src="js/public/public.controller.js"></script>
+
     <script src="js/public/tools/tools.component.js"></script>
     <script src="js/public/tools/tools.controller.js"></script>
+
+    <script src="js/public/user/user.component.js"></script>
+
     <script src="js/public/sag/sag.component.js"></script>
     <script src="js/public/sag/sag.controller.js"></script>
+
     <script src="js/spinner/spinner.module.js"></script>
+
     <script src="js/public/routes.js"></script>
 
     <script src="js/public/sag/chainage.filter.js"></script>
-    
-    <script src="lib/angular-material-icons.min.js"></script>
+
   </body>
 </html>
