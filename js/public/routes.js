@@ -13,7 +13,12 @@ function routeConfig ($stateProvider) {
   $stateProvider
     .state('public', {
       absract: true,
-      templateUrl: 'templates/public/public.html'
+      templateUrl: 'templates/public/public.html',
+      // resolve: {
+      //   auth: ['$auth', function($auth) {
+      //     return $auth.validateUser();
+      //   }]
+      // }
     })      
     .state('public.tools', {
       url: '/tools',

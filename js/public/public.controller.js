@@ -22,9 +22,8 @@ function MenuController($scope, $timeout, $mdSidenav) {
     };
 
     $scope.close = function () {
-      // Component lookup should always be available since we are not using `ng-if`
-      console.log("!!!");
-      $mdSidenav('right').close()
+      // Component lookup should always be available since we are not using `ng-if`      
+      $mdSidenav('left').close()
         .then(function () {
           //$log.debug("right is closed");
         });

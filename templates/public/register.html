@@ -1,35 +1,48 @@
 <div class="container" id="main-content" flex>
-  <form ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email"
-             name="email"
-             id="email"
-             ng-model="registrationForm.email"
-             required="required"
-             class="form-control">
+  <form ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}" layout=column>
+    <div layout=row flex=100 layout-fill layout-align="center center">
+      <md-input-container class="md-block" flex=50>
+      <!-- <div class="form-group"> -->
+        <label for="email">Email</label>
+        <input type="email"
+               name="email"
+               id="email"
+               ng-model="registrationForm.email"
+               required="required"
+               class="form-control">
+      <!-- </div> -->
+      </md-input-container>
     </div>
-
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password"
-             name="password"
-             id="password"
-             ng-model="registrationForm.password"
-             required="required"
-             class="form-control">
+    <div layout=row flex=100 layout-fill layout-align="center center">
+      <md-input-container md-input-container class="md-block" flex=50>
+      <!-- <div class="form-group"> -->
+        <label for="password">Password</label>
+        <input type="password"
+               name="password"
+               id="password"
+               ng-model="registrationForm.password"
+               required="required"
+               class="form-control">
+      <!-- </div> -->
+      </md-input-container>
     </div>
-
-    <div class="form-group">
-      <label for="password_confirmation">Password confirmation</label>
-      <input type="password"
-             name="password_confirmation"
-             id="password_confirmation"
-             ng-model="registrationForm.password_confirmation"
-             required="required"
-             class="form-control">
+    <div layout=row flex=100 layout-fill layout-align="center center">
+      <md-input-container md-input-container class="md-block" flex=50>
+      <!-- <div class="form-group"> -->
+        <label for="password_confirmation">Password confirmation</label>
+        <input type="password"
+               name="password_confirmation"
+               id="password_confirmation"
+               ng-model="registrationForm.password_confirmation"
+               required="required"
+               class="form-control">
+      <!-- </div> -->
+      </md-input-container>
     </div>
-
-    <button type="submit" class="btn btn-primary btn-lg" sref=public.tools>Register</button>
+    
+    <!-- <button type="submit" class="btn btn-primary btn-lg" sref=public.tools>Register</button> -->
+    <div layout=row flex=100 layout-fill layout-align="center center">
+      <md-button type=submit class="md-raised" sref=public.tools>Register</md-button>
+    </div>
   </form>
 </div>
