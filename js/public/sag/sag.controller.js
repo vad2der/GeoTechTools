@@ -50,7 +50,7 @@ function SagController($scope) {
 	};
 
 	sagCtrl.deleteEntry = function(entryIndex){
-		if(sagCtrl.tableContent[entryIndex].lineId.toString() == 1){
+		if(sagCtrl.tableContent[entryIndex].lineId.toString() == "1"){
 			color = 'red';
 			crossingType = "dl-crossing";
 		}
@@ -58,7 +58,7 @@ function SagController($scope) {
 		
 		d3.selectAll(l).remove();
 		sagCtrl.tableContent.splice(entryIndex, 1);
-		lineId = 1;
+		lineId = sagCtrl.tableContent[entryIndex].lineId.toString() == "1" ? 2: parseInt(sagCtrl.tableContent[entryIndex].lineId);
 	}
 
   	sagCtrl.loadTestData = function(){
