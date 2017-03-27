@@ -76,6 +76,7 @@ function MenuController($scope, $timeout, $mdSidenav) {
 UserRegistrationsCtrl.$inject = ['$scope', '$location', '$auth'];
 function UserRegistrationsCtrl($scope, $location, $auth) {
   $scope.handleRegBtnClick = function() {
+    console.log("Registration clicked");
     $auth.submitRegistration($scope.registrationForm)
       .then(function() { 
         $auth.submitLogin({

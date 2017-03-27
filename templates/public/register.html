@@ -1,4 +1,4 @@
-<div class="container" id="main-content" flex>
+<div class="container" id="main-content" flex ng-controller=UserRegistrationsCtrl ng-cloak>
   <form ng-submit="handleRegBtnClick()" role="form" ng-init="registrationForm = {}" layout=column>
     <div layout=row flex=100 layout-fill layout-align="center center">
       <md-input-container class="md-block" flex=50>
@@ -42,7 +42,7 @@
     
     <!-- <button type="submit" class="btn btn-primary btn-lg" sref=public.tools>Register</button> -->
     <div layout=row flex=100 layout-fill layout-align="center center">
-      <md-button type=submit class="md-raised" sref=public.tools>Register</md-button>
+      <md-button type=submit class="md-raised">Register</md-button>
     </div>
   </form>
 </div>

@@ -1,0 +1,25 @@
+<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" flex md-component-id="left" md-is-locked>
+    <md-toolbar md-scroll-shrink>
+        <div class="md-toolbar-tools">
+            <h3>
+                <span>Menu</span>
+            </h3>
+        </div>
+    </md-toolbar>
+    <div ng-controller="MenuController as mc">
+        <md-content flex role="navigation">
+            <ul class="side-menu">
+                <li class="parent-list-item">
+                    <md-button ui-sref="public.tools" ng-click="close()">Tools</md-button>                    
+                    <ul>
+                        <li><md-button ui-sref="public.sag" ng-click="close()">Sag Model</md-button></li>
+                        <li><md-button ui-sref="public.points" disabled>Points Adjustment</md-button></li>
+                    </ul>
+                </li>
+                <li>
+                    <md-button ui-sref="public.about" ng-click="close()">About</md-button>                    
+                </li>
+            </ul>
+        </md-content>>
+    </div>
+</md-sidenav>

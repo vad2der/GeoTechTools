@@ -66,36 +66,11 @@
 
     <div layout=row flex>
 <!-- LEFT SIDENAV -->        
-        <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" flex md-component-id="left" md-is-locked>
-            
-            <md-toolbar md-scroll-shrink>
-                <div class="md-toolbar-tools">
-                  <h3>
-                    <span>Menu</span>
-                  </h3>
-                </div>
-            </md-toolbar>
-            <div ng-controller="MenuController as mc">
-            <md-content flex role="navigation">
-                <ul class="side-menu">
-                  <li class="parent-list-item">
-                    <md-button ui-sref="public.tools" flex=100% ng-click="close()">Tools</md-button>                    
-                        <ul>
-                            <li><md-button ui-sref="public.sag" flex=100% ng-click="close()">Sag Model</md-button></li>
-                            <li><md-button ui-sref="public.points" flex=100% disabled>Points Adjustment</md-button></li>
-                        </ul>
-                  </li>
-                  <li>
-                    <md-button ui-sref="public.about" flex=100% ng-click="close()">About</md-button>                    
-                  </li>
-                </ul>
+        <nav-component>
+        </nav-component>    
 
-            </md-content>>
-            </div>
-        </md-sidenav>
-
-        <div class="ext-content md-whiteframe-z3" layout=row layout-align-gt-sm="center" flex=100>
-          <main>
+    <div class="ext-content md-whiteframe-z3" layout=row layout-align-gt-sm="center" flex=100>
+        <main>
             <div id=message class=alert></div>
             <ui-view>
                 <div class="text-center initial-loading">
@@ -109,10 +84,8 @@
           </main>
         </div>
 <!-- RIGHT SIDENAV -->
-        <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
             <user-component>
             </user-component>
-        </md-sidenav>
       <!-- </md-content> -->
       </div>
 
@@ -158,6 +131,7 @@
     <script src="js/public/tools/tools.component.js"></script>
     <script src="js/public/tools/tools.controller.js"></script>
 
+    <script src="js/public/nav/nav.component.js"></script>
     <script src="js/public/user/user.component.js"></script>
 
     <script src="js/public/sag/sag.component.js"></script>
